@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "346715422501",
+    "project_id": "uchiha-savings",
+    "storage_bucket": "uchiha-savings.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346715422501:android:96120d2d2f4f215650e4cc",
+        "android_client_info": {
+          "package_name": "com.teamfour.uchiha_saving"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346715422501-c2p7g2adjakv26re4p8vj5nbdh7jn9hp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teamfour.uchiha_saving",
+            "certificate_hash": "42b29f44682e462b5ba522f39d01cadc49a25ab6"
+          }
+        },
+        {
+          "client_id": "346715422501-vj5emtl2g4it1abdork1lr632mtd3qcj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSP41vukv191EYOgO8Qbzy5yIpG6Qsw8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346715422501-vj5emtl2g4it1abdork1lr632mtd3qcj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
