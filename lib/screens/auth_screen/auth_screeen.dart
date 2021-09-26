@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -166,7 +165,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               ),
 
                             MaterialButton(
-                              elevation: 30,
+                              elevation: 10,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
