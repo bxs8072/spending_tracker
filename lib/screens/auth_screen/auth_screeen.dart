@@ -66,6 +66,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 Container(
                   height: _size.height * 0.27,
                   width: _size.width,
+                  margin: EdgeInsets.only(bottom: 10),
                   child: FlareActor(
                     "assets/animations/Teddy.flr",
                     shouldClip: false,

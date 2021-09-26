@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:uchiha_saving/api/auth.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/screens/create_account_screen/create_account_screen.dart';
+import 'package:uchiha_saving/screens/home_screen/components/bottom_navigation_bar_item_list.dart';
 
 class HomeScreen extends StatefulWidget {
   final Person person;
@@ -13,6 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _index = 0;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
@@ -31,6 +35,18 @@ class _HomeScreenState extends State<HomeScreen> {
           return Scaffold(
             body: Center(
               child: Text("Account Found"),
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              items: bottomNavigationBarList,
+              currentIndex: _index,
+              selectedItemColor: selectedColor(_index),
+              elevation: 20,
+              type: BottomNavigationBarType.shifting,
+              onTap: (index) {
+                setState(() {
+                  _index = index;
+                });
+              },
             ),
           );
         }

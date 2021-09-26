@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -164,8 +165,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               Container(
                 alignment: Alignment.center,
                 child: _isUploading
-                    ? Center(
-                        child: CircularProgressIndicator(),
+                    ? Container(
+                        height: _size.height * 0.22,
+                        width: _size.height * 0.22,
+                        child: FlareActor("assets/animations/Dragon.flr",
+                            animation: "Untitled", color: Colors.red),
                       )
                     : Stack(
                         children: [
