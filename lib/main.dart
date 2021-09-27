@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemeProvider(
-      defaultThemeId: "dark",
+      defaultThemeId: "light",
       themes: [
         AppTheme.light(
             id: "light"), // This is standard light theme (id is default_light_theme)

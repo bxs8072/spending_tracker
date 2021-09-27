@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -92,6 +93,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 key: widget.key,
                                 title: _loginFormType ? "Sign In" : "Register"),
                             SizedBox(height: 15),
+
                             TrackingTextInput(
                               hint: "Email Address",
                               isObscured: false,

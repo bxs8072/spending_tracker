@@ -17,5 +17,5 @@ Color selectedColor(int index) {
           ? Colors.red
           : index == 2
               ? Colors.green
-              : Colors.white;
+              : Colors.purple;
 }

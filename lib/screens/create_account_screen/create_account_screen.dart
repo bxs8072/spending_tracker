@@ -185,7 +185,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               child: IconButton(
                                 splashRadius: 100,
                                 onPressed: chooseFile,
-                                icon: Icon(Icons.edit),
+                                icon: Icon(Icons.camera_alt),
                               ),
                             ),
                           ),

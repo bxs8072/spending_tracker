@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uchiha_saving/models/address.dart';
 import 'package:uchiha_saving/models/name.dart';
 
@@ -26,14 +27,25 @@ class Person {
         "balance": balance,
         "phone": phone,
         "email": email,
+        "photoURL": photoURL,
         "address": address.toMap(),
       };
 
-  Person fromMap(Map<String, dynamic> data) => Person(
+  factory Person.fromMap(Map<String, dynamic> data) => Person(
         id: data["id"],
         phone: data["phone"],
         email: data["email"],
-        address: Address.fromMap(data["address"]),
+        address: Address.fromDynamic(data["address"]),
+        balance: data["balance"],
+        name: Name.fromDynamic(data["name"]),
+        photoURL: data["photoURL"],
+      );
+
+  factory Person.fromDocumentSnapshot(DocumentSnapshot data) => Person(
+        id: data["id"],
+        phone: data["phone"],
+        email: data["email"],
+        address: Address.fromDynamic(data["address"]),
         balance: data["balance"],
         name: Name.fromDynamic(data["name"]),
         photoURL: data["photoURL"],

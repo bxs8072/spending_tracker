@@ -29,4 +29,14 @@ class Address {
       zipCode: data["zipCode"],
     );
   }
+
+  factory Address.fromDynamic(dynamic data) {
+    return Address(
+      city: data["city"],
+      roomNumber: data["roomNumber"],
+      state: data["state"],
+      street: data["street"],
+      zipCode: data["zipCode"],
+    );
+  }
 }

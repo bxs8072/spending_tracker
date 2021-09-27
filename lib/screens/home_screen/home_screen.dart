@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:uchiha_saving/api/auth.dart';
 import 'package:uchiha_saving/models/person.dart';
+import 'package:uchiha_saving/pages/dashboard/dashboard.dart';
+import 'package:uchiha_saving/pages/profile_page/profile_page.dart';
+import 'package:uchiha_saving/pages/savings_page/savings_page.dart';
+import 'package:uchiha_saving/pages/transaction_page/transaction_page.dart';
 import 'package:uchiha_saving/screens/create_account_screen/create_account_screen.dart';
 import 'package:uchiha_saving/screens/home_screen/components/bottom_navigation_bar_item_list.dart';
 
@@ -17,6 +20,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
 
+  List<Widget> pages(Person person) => [
+        Dashboard(person: person),
+        TransactionPage(person: person),
+        SavingsPage(person: person),
+        ProfilePage(person: person),
+      ];
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
@@ -29,26 +39,28 @@ class _HomeScreenState extends State<HomeScreen> {
           return Center(
             child: CircularProgressIndicator(),
           );
-        } else if (!snapshot.data!.exists) {
-          return CreateAccountScreen(key: widget.key, person: widget.person);
         } else {
-          return Scaffold(
-            body: Center(
-              child: Text("Account Found"),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              items: bottomNavigationBarList,
-              currentIndex: _index,
-              selectedItemColor: selectedColor(_index),
-              elevation: 20,
-              type: BottomNavigationBarType.shifting,
-              onTap: (index) {
-                setState(() {
-                  _index = index;
-                });
-              },
-            ),
-          );
+          if (!snapshot.data!.exists) {
+            return CreateAccountScreen(key: widget.key, person: widget.person);
+          } else {
+            Person _person = Person.fromDocumentSnapshot(snapshot.data!);
+            return Scaffold(
+              body: pages(_person)[_index],
+              bottomNavigationBar: BottomNavigationBar(
+                items: bottomNavigationBarList,
+                currentIndex: _index,
+                selectedItemColor: selectedColor(_index),
+                elevation: 20,
+                type: BottomNavigationBarType.shifting,
+                unselectedItemColor: Colors.grey,
+                onTap: (index) {
+                  setState(() {
+                    _index = index;
+                  });
+                },
+              ),
+            );
+          }
         }
       },
     );

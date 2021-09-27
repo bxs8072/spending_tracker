@@ -6,7 +6,7 @@ class Spend {
   final String description;
   final Timestamp createdAt;
   final double amount;
-  final int spendType; // icome => 1, expense => 2
+  final int spendType; // income => 1, expense => 2
   final Category category;
   final int priority; // high => 3, medium => 2, low => 1
 
