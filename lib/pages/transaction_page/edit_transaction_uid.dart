@@ -4,18 +4,24 @@ import 'package:uchiha_saving/models/category.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/models/transaction.dart';
 
-class AddTransactionsUI extends StatefulWidget {
+class EditTransactionsUI extends StatefulWidget {
   final Person person;
   final List<Category> categoryList;
-  const AddTransactionsUI(
-      {Key? key, required this.person, required this.categoryList})
-      : super(key: key);
+  final Transaction transaction;
+  final String id;
+  const EditTransactionsUI({
+    Key? key,
+    required this.person,
+    required this.categoryList,
+    required this.transaction,
+    required this.id,
+  }) : super(key: key);
 
   @override
-  State<AddTransactionsUI> createState() => _AddTransactionsUIState();
+  State<EditTransactionsUI> createState() => _EditTransactionsUIState();
 }
 
-class _AddTransactionsUIState extends State<AddTransactionsUI> {
+class _EditTransactionsUIState extends State<EditTransactionsUI> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
@@ -71,8 +77,24 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
       .toList();
 
   int? _priority;
-  TransactionType? _spendType;
+  TransactionType? _transactionType;
   Category? _category;
+
+  initialize() {
+    setState(() {
+      _titleController.text = widget.transaction.title;
+      _descriptionController.text = widget.transaction.description;
+      _amountController.text = widget.transaction.amount.toString();
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +102,7 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
         slivers: [
           SliverAppBar(
             pinned: true,
-            title: Text("Add Transaction"),
+            title: Text("Edit Transaction"),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -174,16 +196,16 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   children: [
-                                    Text("Spend Type"),
+                                    Text("Transaction Type"),
                                     DropdownButton<TransactionType>(
                                       items: _spendTypeItems,
                                       underline: Center(),
-                                      hint: Text("Spend Type"),
-                                      value: _spendType,
-                                      key: ValueKey(_spendType),
+                                      hint: Text("Transaction Type"),
+                                      value: _transactionType,
+                                      key: ValueKey(_transactionType),
                                       onChanged: (val) {
                                         setState(() {
-                                          _spendType = val!;
+                                          _transactionType = val!;
                                         });
                                       },
                                     ),
@@ -201,15 +223,15 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
                               .collection("Transactions")
                               .doc(widget.person.id)
                               .collection("Transactions")
-                              .doc()
-                              .set(Transaction(
+                              .doc(widget.id)
+                              .update(Transaction(
                                       title: _titleController.text.trim(),
                                       description:
                                           _descriptionController.text.trim(),
                                       createdAt: fr.Timestamp.now(),
                                       amount: double.parse(
                                           _amountController.text.trim()),
-                                      transactionType: _spendType!,
+                                      transactionType: _transactionType!,
                                       category: _category!,
                                       priority: _priority!)
                                   .toMap)

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as fr;
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/iconic_icons.dart';
@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:uchiha_saving/models/category.dart';
 import 'package:uchiha_saving/models/person.dart';
-import 'package:uchiha_saving/models/spend.dart';
+import 'package:uchiha_saving/models/transaction.dart';
 import 'package:uchiha_saving/tools/get_random_color.dart';
 
 class DashboardRecentActivity extends StatefulWidget {
@@ -19,46 +19,46 @@ class DashboardRecentActivity extends StatefulWidget {
 }
 
 class _DashboardRecentActivityState extends State<DashboardRecentActivity> {
-  List<Spend> _list = [
-    Spend(
+  List<Transaction> _list = [
+    Transaction(
       title: "Walmart",
       description: "Bought groceries",
-      createdAt: Timestamp.now(),
+      createdAt: fr.Timestamp.now(),
       amount: 67.65,
-      spendType: SpendType.expense,
+      transactionType: TransactionType.expense,
       category: Category(iconData: Icons.shopping_bag, title: "Grocery"),
       priority: 3,
     ),
-    Spend(
+    Transaction(
       title: "Gas Station",
       description: "Filled gas at Racetrac",
-      createdAt: Timestamp.now(),
+      createdAt: fr.Timestamp.now(),
       amount: 35.00,
-      spendType: SpendType.expense,
+      transactionType: TransactionType.expense,
       category: Category(
         iconData: Icons.emoji_transportation,
         title: "Transportation",
       ),
       priority: 3,
     ),
-    Spend(
+    Transaction(
       title: "Netflix",
       description: "Netflix Subscription",
-      createdAt: Timestamp.now(),
+      createdAt: fr.Timestamp.now(),
       amount: 20.00,
-      spendType: SpendType.expense,
+      transactionType: TransactionType.expense,
       category: Category(
         iconData: Iconic.video,
         title: "Entertainment",
       ),
       priority: 1,
     ),
-    Spend(
+    Transaction(
       title: "College Tuition",
       description: "First Installment",
-      createdAt: Timestamp.now(),
+      createdAt: fr.Timestamp.now(),
       amount: 2000.00,
-      spendType: SpendType.expense,
+      transactionType: TransactionType.expense,
       category: Category(
         iconData: Icons.school,
         title: "School",
@@ -158,7 +158,7 @@ class _DashboardRecentActivityState extends State<DashboardRecentActivity> {
                           ],
                         ),
                         trailing: Text(
-                          _list[i].spendType == 1
+                          _list[i].transactionType == 1
                               ? "+ "
                               : "- " +
                                   "\$${_list[i].amount.toStringAsFixed(2)}",

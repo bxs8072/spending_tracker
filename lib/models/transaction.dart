@@ -1,23 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uchiha_saving/models/category.dart';
 
-enum SpendType { income, expense }
+enum TransactionType { income, expense }
 
-class Spend {
+class Transaction {
   final String title;
   final String description;
   final Timestamp createdAt;
   final double amount;
-  final SpendType spendType;
+  final TransactionType transactionType;
   final Category category;
   final int priority; // high => 3, medium => 2, low => 1
 
-  Spend(
+  Transaction(
       {required this.title,
       required this.description,
       required this.createdAt,
       required this.amount,
-      required this.spendType,
+      required this.transactionType,
       required this.category,
       required this.priority});
 
@@ -26,25 +26,27 @@ class Spend {
         "description": description,
         "createdAt": createdAt,
         "amount": amount,
-        "spendType": spendTypeToString(spendType),
+        "transactionType": transactionTypeToString(transactionType),
         "category": category.toMap,
         "priority": priority,
       };
 
-  static String spendTypeToString(SpendType spendType) =>
-      spendType == SpendType.expense ? "expense" : "income";
+  static String transactionTypeToString(TransactionType transactionType) =>
+      transactionType == TransactionType.expense ? "expense" : "income";
 
-  static SpendType stringToSpendType(String spendType) =>
-      spendType == "expense" ? SpendType.expense : SpendType.income;
+  static TransactionType stringToTransactionType(String transactionType) =>
+      transactionType == "expense"
+          ? TransactionType.expense
+          : TransactionType.income;
 
-  factory Spend.fromDynamic(dynamic data) {
-    return Spend(
+  factory Transaction.fromDynamic(dynamic data) {
+    return Transaction(
       amount: data["amount"],
       category: Category.fromDynamic(data["category"]),
       createdAt: data["createdAt"],
       description: data["description"],
       priority: data["priority"],
-      spendType: stringToSpendType(data["spendType"]),
+      transactionType: stringToTransactionType(data["transactionType"]),
       title: data["title"],
     );
   }
