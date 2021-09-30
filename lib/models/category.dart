@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Category {
@@ -11,8 +12,15 @@ class Category {
 
   factory Category.fromDynamic(dynamic data) {
     return Category(
-      iconData: IconData(data['codePoint']),
-      title: data['Title'],
+      iconData: IconData(data['codePoint'], fontFamily: 'MaterialIcons'),
+      title: data['title'],
+    );
+  }
+
+  factory Category.fromDocumentSnapshot(DocumentSnapshot data) {
+    return Category(
+      iconData: IconData(data['codePoint'], fontFamily: 'MaterialIcons'),
+      title: data['title'],
     );
   }
 }

@@ -9,17 +9,23 @@ import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/models/spend.dart';
 import 'package:uchiha_saving/tools/get_random_color.dart';
 
-class DashboardRecentActivity extends StatelessWidget {
+class DashboardRecentActivity extends StatefulWidget {
   final Person person;
   DashboardRecentActivity({Key? key, required this.person}) : super(key: key);
 
+  @override
+  State<DashboardRecentActivity> createState() =>
+      _DashboardRecentActivityState();
+}
+
+class _DashboardRecentActivityState extends State<DashboardRecentActivity> {
   List<Spend> _list = [
     Spend(
       title: "Walmart",
       description: "Bought groceries",
       createdAt: Timestamp.now(),
       amount: 67.65,
-      spendType: 2,
+      spendType: SpendType.expense,
       category: Category(iconData: Icons.shopping_bag, title: "Grocery"),
       priority: 3,
     ),
@@ -28,7 +34,7 @@ class DashboardRecentActivity extends StatelessWidget {
       description: "Filled gas at Racetrac",
       createdAt: Timestamp.now(),
       amount: 35.00,
-      spendType: 2,
+      spendType: SpendType.expense,
       category: Category(
         iconData: Icons.emoji_transportation,
         title: "Transportation",
@@ -40,7 +46,7 @@ class DashboardRecentActivity extends StatelessWidget {
       description: "Netflix Subscription",
       createdAt: Timestamp.now(),
       amount: 20.00,
-      spendType: 2,
+      spendType: SpendType.expense,
       category: Category(
         iconData: Iconic.video,
         title: "Entertainment",
@@ -52,50 +58,22 @@ class DashboardRecentActivity extends StatelessWidget {
       description: "First Installment",
       createdAt: Timestamp.now(),
       amount: 2000.00,
-      spendType: 2,
+      spendType: SpendType.expense,
       category: Category(
         iconData: Icons.school,
         title: "School",
       ),
       priority: 3,
     ),
-    // Spend(
-    //   title: "Shopping Clothes",
-    //   description: "Bought Shirts and Pants",
-    //   createdAt: Timestamp.now(),
-    //   amount: 635.45,
-    //   spendType: 2,
-    //   category: Category(
-    //     iconData: Icons.shopping_bag,
-    //     title: "Shopping",
-    //   ),
-    //   priority: 2,
-    // ),
-    // Spend(
-    //   title: "Shopping Clothes",
-    //   description: "Bought Shirts and Pants",
-    //   createdAt: Timestamp.now(),
-    //   amount: 635.45,
-    //   spendType: 2,
-    //   category: Category(
-    //     iconData: Icons.shopping_bag,
-    //     title: "Shopping",
-    //   ),
-    //   priority: 2,
-    // ),
-    // Spend(
-    //   title: "Shopping Clothes",
-    //   description: "Bought Shirts and Pants",
-    //   createdAt: Timestamp.now(),
-    //   amount: 635.45,
-    //   spendType: 2,
-    //   category: Category(
-    //     iconData: Icons.shopping_bag,
-    //     title: "Shopping",
-    //   ),
-    //   priority: 2,
-    // ),
   ];
+
+  bool _isColorful = false;
+
+  toggle() {
+    setState(() {
+      _isColorful = !_isColorful;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +96,18 @@ class DashboardRecentActivity extends StatelessWidget {
                     fontSize: _size.height * 0.025,
                   ),
                 ),
+                trailing: GestureDetector(
+                  onTap: toggle,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: _isColorful ? Colors.black : Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    height: 20,
+                    width: 20,
+                    child: Card(),
+                  ),
+                ),
               ),
               ListView.builder(
                   primary: false,
@@ -132,7 +122,9 @@ class DashboardRecentActivity extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        tileColor: getRandomColor(context),
+                        tileColor: _isColorful
+                            ? getRandomColor(context)
+                            : Colors.transparent,
                         leading: Icon(_list[i].category.iconData),
                         isThreeLine: true,
                         dense: true,

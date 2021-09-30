@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uchiha_saving/models/category.dart';
 
+enum SpendType { income, expense }
+
 class Spend {
   final String title;
   final String description;
   final Timestamp createdAt;
   final double amount;
-  final int spendType; // income => 1, expense => 2
+  final SpendType spendType;
   final Category category;
   final int priority; // high => 3, medium => 2, low => 1
 
@@ -24,10 +26,16 @@ class Spend {
         "description": description,
         "createdAt": createdAt,
         "amount": amount,
-        "spendType": spendType,
+        "spendType": spendTypeToString(spendType),
         "category": category.toMap,
         "priority": priority,
       };
+
+  static String spendTypeToString(SpendType spendType) =>
+      spendType == SpendType.expense ? "expense" : "income";
+
+  static SpendType stringToSpendType(String spendType) =>
+      spendType == "expense" ? SpendType.expense : SpendType.income;
 
   factory Spend.fromDynamic(dynamic data) {
     return Spend(
@@ -36,7 +44,7 @@ class Spend {
       createdAt: data["createdAt"],
       description: data["description"],
       priority: data["priority"],
-      spendType: data["spendType"],
+      spendType: stringToSpendType(data["spendType"]),
       title: data["title"],
     );
   }
