@@ -5,8 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:uchiha_saving/models/category.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/models/transaction.dart';
-import 'package:uchiha_saving/pages/transaction_page/add_transaction_ui.dart';
-import 'package:uchiha_saving/pages/transaction_page/edit_transaction_uid.dart';
+import 'package:uchiha_saving/pages/transaction_page/edit_transaction_ui.dart';
 import 'package:uchiha_saving/tools/custom_navigator.dart';
 
 class TransactionBuilder extends StatelessWidget {
