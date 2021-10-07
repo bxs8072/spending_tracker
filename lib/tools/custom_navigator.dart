@@ -8,3 +8,11 @@ void customNavigator(BuildContext context, Widget widget) {
     }),
   );
 }
+
+void customNavigatorAndReplace(BuildContext context, Widget widget) {
+  Navigator.of(context).pushReplacement(
+    MaterialPageRoute(builder: (ctx) {
+      return widget;
+    }),
+  );
+}

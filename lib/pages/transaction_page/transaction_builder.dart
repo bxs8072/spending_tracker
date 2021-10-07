@@ -147,6 +147,9 @@ class TransactionBuilder extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
+                  Divider(
+                    thickness: 2,
+                  ),
                 ],
               ),
               trailing: Text(

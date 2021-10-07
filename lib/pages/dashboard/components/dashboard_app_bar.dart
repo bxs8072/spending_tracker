@@ -14,10 +14,8 @@ class DashboardAppBar extends StatelessWidget {
 
     return SliverAppBar(
       pinned: true,
-      floating: true,
-      forceElevated: true,
       stretch: true,
-      snap: true,
+      backgroundColor: Colors.transparent,
       leading: Container(
         height: _size.height * 0.22,
         width: _size.height * 0.22,

@@ -6,9 +6,9 @@ import 'package:uchiha_saving/models/transaction.dart';
 
 class AddTransactionsUI extends StatefulWidget {
   final Person person;
-  final List<Category> categoryList;
+  final Category category;
   const AddTransactionsUI(
-      {Key? key, required this.person, required this.categoryList})
+      {Key? key, required this.person, required this.category})
       : super(key: key);
 
   @override
@@ -55,24 +55,8 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
     ),
   ];
 
-  List<DropdownMenuItem<Category>> get _categoryItems => widget.categoryList
-      .map(
-        (e) => DropdownMenuItem<Category>(
-          child: Row(
-            children: [
-              Icon(e.iconData),
-              SizedBox(width: 10),
-              Text(e.title),
-            ],
-          ),
-          value: e,
-        ),
-      )
-      .toList();
-
   int? _priority;
   TransactionType? _spendType;
-  Category? _category;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,21 +102,6 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
                         onChanged: (val) {
                           setState(() {});
                         },
-                      ),
-                      SizedBox(height: 20),
-                      Center(
-                        child: DropdownButton<Category>(
-                          items: _categoryItems,
-                          underline: Center(),
-                          hint: Text("Categories"),
-                          value: _category,
-                          key: ValueKey(_category),
-                          onChanged: (val) {
-                            setState(() {
-                              _category = val!;
-                            });
-                          },
-                        ),
                       ),
                       SizedBox(height: 20),
                       Row(
@@ -210,7 +179,7 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
                                       amount: double.parse(
                                           _amountController.text.trim()),
                                       transactionType: _spendType!,
-                                      category: _category!,
+                                      category: widget.category,
                                       priority: _priority!)
                                   .toMap)
                               .then((value) {
