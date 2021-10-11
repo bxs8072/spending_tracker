@@ -41,12 +41,28 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
+            child: Card(
+              child: Card(
+                child: ListTile(
+                  leading: Icon(Icons.monetization_on),
+                  title: Text(
+                    "Balance: \$ " + person.balance.toStringAsFixed(2),
+                    style: GoogleFonts.lato(),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
             child: Column(
               children: [
                 Card(
                   child: ListTile(
                     leading: Icon(Icons.phone),
-                    title: Text(person.phone),
+                    title: Text(
+                      person.phone,
+                      style: GoogleFonts.lato(),
+                    ),
                   ),
                 ),
                 Card(
@@ -60,23 +76,17 @@ class ProfilePage extends StatelessWidget {
                             person.address.street +
                                 ", " +
                                 person.address.roomNumber,
-                            style: GoogleFonts.lato(
-                              fontSize: _size.height * 0.022,
-                            ),
+                            style: GoogleFonts.lato(),
                           ),
                           Text(
                             person.address.city,
-                            style: GoogleFonts.lato(
-                              fontSize: _size.height * 0.022,
-                            ),
+                            style: GoogleFonts.lato(),
                           ),
                           Text(
                             person.address.state +
                                 " " +
                                 person.address.zipCode.toString(),
-                            style: GoogleFonts.lato(
-                              fontSize: _size.height * 0.022,
-                            ),
+                            style: GoogleFonts.lato(),
                           ),
                         ],
                       )),
@@ -90,19 +100,28 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   ListTile(
                     leading: Icon(Icons.category),
-                    title: Text("Categories"),
+                    title: Text(
+                      "Categories",
+                      style: GoogleFonts.lato(),
+                    ),
                     onTap: () {
                       customNavigator(context, CategoriesUI(person: person));
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.book),
-                    title: Text("FAQ and Policies"),
+                    title: Text(
+                      "FAQ and Policies",
+                      style: GoogleFonts.lato(),
+                    ),
                     onTap: () {},
                   ),
                   ListTile(
                     leading: Icon(Icons.bookmark),
-                    title: Text("Bookmarks"),
+                    title: Text(
+                      "Bookmarks",
+                      style: GoogleFonts.lato(),
+                    ),
                     onTap: () {},
                   ),
                 ],

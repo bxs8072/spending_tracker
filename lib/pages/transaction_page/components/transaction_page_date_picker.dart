@@ -64,7 +64,7 @@ class TransactionPageDatePicker extends StatelessWidget {
               ),
               initialValue: transactionPageModel.endDate.toString(),
               firstDate: transactionPageModel.startDate,
-              lastDate: DateTime(DateTime.now().year + 1),
+              lastDate: DateTime.now(),
               icon: Icon(Icons.event),
               onChanged: (val) {
                 print(val);

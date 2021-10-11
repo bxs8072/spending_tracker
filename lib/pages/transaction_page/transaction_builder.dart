@@ -122,13 +122,7 @@ class TransactionBuilder extends StatelessWidget {
               ),
               leading: Icon(transactionList[i].category.iconData),
               contentPadding: EdgeInsets.all(8.0),
-              title: Text(
-                transactionList[i].title,
-                style: GoogleFonts.lato(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Column(
+              title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -137,12 +131,31 @@ class TransactionBuilder extends StatelessWidget {
                         ),
                     style: GoogleFonts.lato(
                       fontWeight: FontWeight.bold,
+                      fontSize: MediaQuery.of(context).size.height * 0.016,
+                    ),
+                  ),
+                  Text(
+                    transactionList[i].title,
+                    style: GoogleFonts.lato(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    transactionList[i].category.title,
+                    style: GoogleFonts.lato(
+                      fontWeight: FontWeight.bold,
+                      fontSize: MediaQuery.of(context).size.height * 0.020,
                     ),
                   ),
                   Text(
                     transactionList[i].description,
                     style: GoogleFonts.lato(
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
