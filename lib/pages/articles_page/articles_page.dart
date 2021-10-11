@@ -142,7 +142,13 @@ class ArticlesPage extends StatelessWidget {
                                                               .doc(person.id)
                                                               .collection(
                                                                   'Articles')
-                                                              .doc(item.title)
+                                                              .doc(item.title
+                                                                  .replaceAll(
+                                                                      new RegExp(
+                                                                          r'[^\w\s]+'),
+                                                                      "")
+                                                                  .split(' ')
+                                                                  .join(''))
                                                               .delete()
                                                               .then((value) {
                                                               Fluttertoast
@@ -157,7 +163,13 @@ class ArticlesPage extends StatelessWidget {
                                                               .doc(person.id)
                                                               .collection(
                                                                   'Articles')
-                                                              .doc(item.title)
+                                                              .doc(item.title
+                                                                  .replaceAll(
+                                                                      new RegExp(
+                                                                          r'[^\w\s]+'),
+                                                                      "")
+                                                                  .split(' ')
+                                                                  .join(''))
                                                               .set(item.toMap())
                                                               .then((value) {
                                                               Fluttertoast

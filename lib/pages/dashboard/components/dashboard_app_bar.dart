@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:uchiha_saving/models/person.dart';
+import 'package:uchiha_saving/tools/custom_navigator.dart';
 import 'package:uchiha_saving/tools/get_random_color.dart';
+import 'package:uchiha_saving/uis/notifications_ui/notifications_ui.dart';
 
 class DashboardAppBar extends StatelessWidget {
   final Person person;
@@ -30,7 +32,12 @@ class DashboardAppBar extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            customNavigator(
+              context,
+              NotificationsUI(key: key, person: person),
+            );
+          },
           icon: Icon(Entypo.bell),
         ),
       ],

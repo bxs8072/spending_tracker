@@ -23,7 +23,10 @@ class _ArticleDetailUIState extends State<ArticleDetailUI> {
         .collection('Articles')
         .doc(widget.person.id)
         .collection('Articles')
-        .doc(widget.article.title);
+        .doc(widget.article.title
+            .replaceAll(new RegExp(r'[^\w\s]+'), "")
+            .split(' ')
+            .join(''));
     return Scaffold(
       key: _key,
       floatingActionButton: StreamBuilder<DocumentSnapshot>(
