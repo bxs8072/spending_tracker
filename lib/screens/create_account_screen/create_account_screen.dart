@@ -28,10 +28,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   FocusNode _cityFocusnode = FocusNode();
   FocusNode _stateFocusnode = FocusNode();
   FocusNode _zipCodeFocusnode = FocusNode();
+  FocusNode _balanceFocusNode = FocusNode();
 
   TextEditingController _firstNameController = TextEditingController();
   TextEditingController _middleNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _balanceController = TextEditingController();
+
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _streetController = TextEditingController();
   TextEditingController _roomNumberController = TextEditingController();
@@ -141,7 +144,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             lastName: _lastNameController.text.trim(),
           ),
           photoURL: _photoUrl,
-          balance: 0.00,
+          balance: double.parse(
+            _balanceController.text.trim(),
+          ),
         ).toMap());
   }
 
@@ -232,6 +237,23 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   FocusScope.of(context).nextFocus();
                 },
               ),
+
+              TextFormField(
+                controller: _balanceController,
+                focusNode: _balanceFocusNode,
+                keyboardType: TextInputType.streetAddress,
+                decoration: InputDecoration(
+                  hintText: "1800",
+                  label: Text("Initial Balance"),
+                ),
+                onChanged: (val) {
+                  setState(() {});
+                },
+                onEditingComplete: () {
+                  FocusScope.of(context).nextFocus();
+                },
+              ),
+
               TextFormField(
                 controller: _phoneController,
                 focusNode: _phoneFocusnode,
@@ -263,6 +285,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   FocusScope.of(context).nextFocus();
                 },
               ),
+
               Row(
                 children: [
                   Flexible(

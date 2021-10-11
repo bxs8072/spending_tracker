@@ -6,6 +6,7 @@ import 'package:uchiha_saving/pages/dashboard/components/dashboard_app_bar.dart'
 import 'package:uchiha_saving/pages/dashboard/components/dashboard_balance_card.dart';
 import 'package:uchiha_saving/pages/dashboard/components/dashboard_recent_activities.dart';
 import 'package:uchiha_saving/pages/dashboard/components/dashboard_target_card.dart';
+import 'package:uchiha_saving/pages/dashboard/components/quote_of_the_day.dart';
 
 class Dashboard extends StatefulWidget {
   final Person person;
@@ -25,6 +26,7 @@ class _DashboardState extends State<Dashboard> {
         slivers: [
           DashboardAppBar(person: widget.person, key: widget.key),
           DashboardBalanceCard(key: widget.key, person: widget.person),
+          // QuoteOfTheDay(person: widget.person, key: widget.key),
           DashboardRecentActivity(person: widget.person, key: widget.key),
           DashboardTargetCard(person: widget.person, key: widget.key),
         ],

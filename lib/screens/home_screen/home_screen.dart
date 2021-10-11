@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uchiha_saving/api/auth.dart';
 import 'package:uchiha_saving/models/person.dart';
+import 'package:uchiha_saving/pages/articles_page/articles_page.dart';
 import 'package:uchiha_saving/pages/dashboard/dashboard.dart';
 import 'package:uchiha_saving/pages/profile_page/profile_page.dart';
 import 'package:uchiha_saving/pages/savings_page/savings_page.dart';
@@ -21,10 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
 
   List<Widget> pages(Person person) => [
-        Dashboard(person: person),
-        TransactionPage(person: person),
-        SavingsPage(person: person),
-        ProfilePage(person: person),
+        Dashboard(person: person, key: widget.key),
+        TransactionPage(person: person, key: widget.key),
+        ArticlesPage(person: person, key: widget.key),
+        SavingsPage(person: person, key: widget.key),
+        ProfilePage(person: person, key: widget.key),
       ];
 
   @override
@@ -49,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
               bottomNavigationBar: BottomNavigationBar(
                 items: bottomNavigationBarList,
                 currentIndex: _index,
-                selectedItemColor: selectedColor(_index),
+                selectedItemColor: selectedColor(context),
                 elevation: 20,
                 type: BottomNavigationBarType.shifting,
                 unselectedItemColor: Colors.grey,

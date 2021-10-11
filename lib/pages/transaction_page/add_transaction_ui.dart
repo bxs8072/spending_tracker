@@ -44,7 +44,7 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
     ),
   ];
 
-  List<DropdownMenuItem<TransactionType>> _spendTypeItems = [
+  List<DropdownMenuItem<TransactionType>> _transactionTypeItems = [
     DropdownMenuItem(
       child: Text("Expense"),
       value: TransactionType.expense,
@@ -56,7 +56,7 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
   ];
 
   int? _priority;
-  TransactionType? _spendType;
+  TransactionType? _transactionType;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,14 +145,14 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
                                   children: [
                                     Text("Spend Type"),
                                     DropdownButton<TransactionType>(
-                                      items: _spendTypeItems,
+                                      items: _transactionTypeItems,
                                       underline: Center(),
                                       hint: Text("Spend Type"),
-                                      value: _spendType,
-                                      key: ValueKey(_spendType),
+                                      value: _transactionType,
+                                      key: ValueKey(_transactionType),
                                       onChanged: (val) {
                                         setState(() {
-                                          _spendType = val!;
+                                          _transactionType = val!;
                                         });
                                       },
                                     ),
@@ -178,11 +178,29 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
                                       createdAt: fr.Timestamp.now(),
                                       amount: double.parse(
                                           _amountController.text.trim()),
-                                      transactionType: _spendType!,
+                                      transactionType: _transactionType!,
                                       category: widget.category,
                                       priority: _priority!)
                                   .toMap)
                               .then((value) {
+                            if (_transactionType! == TransactionType.income) {
+                              fr.FirebaseFirestore.instance
+                                  .collection("Users")
+                                  .doc(widget.person.id)
+                                  .update({
+                                "balance": widget.person.balance +
+                                    double.parse(_amountController.text.trim()),
+                              });
+                            } else {
+                              fr.FirebaseFirestore.instance
+                                  .collection("Users")
+                                  .doc(widget.person.id)
+                                  .update({
+                                "balance": widget.person.balance -
+                                    double.parse(_amountController.text.trim()),
+                              });
+                            }
+                          }).then((value) {
                             Navigator.of(context).pop();
                           });
                         },

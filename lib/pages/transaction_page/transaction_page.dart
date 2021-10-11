@@ -1,19 +1,17 @@
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart' as fr;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uchiha_saving/models/category.dart';
+import 'package:theme_provider/theme_provider.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/models/transaction.dart';
-import 'package:uchiha_saving/pages/transaction_page/add_transaction_ui.dart';
 import 'package:uchiha_saving/pages/transaction_page/bloc/transaction_page_bloc.dart';
 import 'package:uchiha_saving/pages/transaction_page/bloc/transaction_page_model.dart';
+import 'package:uchiha_saving/pages/transaction_page/components/transaction_page_categories_picker.dart';
+import 'package:uchiha_saving/pages/transaction_page/components/transaction_page_date_picker.dart';
 import 'package:uchiha_saving/pages/transaction_page/select_category_ui.dart';
 import 'package:uchiha_saving/pages/transaction_page/transaction_builder.dart';
 import 'package:uchiha_saving/tools/custom_navigator.dart';
-import 'package:date_time_picker/date_time_picker.dart';
-import 'package:select_form_field/select_form_field.dart';
 
 // ignore: must_be_immutable
 class TransactionPage extends StatelessWidget {
@@ -21,8 +19,6 @@ class TransactionPage extends StatelessWidget {
   TransactionPage({Key? key, required this.person}) : super(key: key);
 
   TransactionPageBloc _bloc = TransactionPageBloc();
-
-  Category? category;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +29,14 @@ class TransactionPage extends StatelessWidget {
         onPressed: () async {
           customNavigator(context, SelectCategoryUI(person: person));
         },
-        child: Icon(Icons.add),
+        backgroundColor:
+            ThemeProvider.controllerOf(context).currentThemeId == "dark"
+                ? Colors.white
+                : Colors.black,
+        child: Icon(Icons.add,
+            color: ThemeProvider.controllerOf(context).currentThemeId == "dark"
+                ? Colors.black
+                : Colors.white),
       ),
       body: StreamBuilder<TransactionPageModel>(
           initialData: TransactionPageModel(
@@ -45,158 +48,27 @@ class TransactionPage extends StatelessWidget {
             return CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  title: Text("Transactions"),
+                  title: Text(
+                    "Transactions",
+                  ),
                   pinned: true,
+                  foregroundColor: 
+                  ThemeProvider.controllerOf(context).currentThemeId == "dark" ?
+                  Colors.white:
+                  Colors.black,
                   backgroundColor: Colors.transparent,
                 ),
                 SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: DateTimePicker(
-                            type: DateTimePickerType.date,
-                            dateMask: 'd MMM, yyyy',
-                            initialValue: snapshot.data!.startDate.toString(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime.now(),
-                            icon: Icon(Icons.event),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              label: Text("Start Date"),
-                            ),
-                            onChanged: (val) {
-                              _bloc.update(
-                                startDate: DateTime.parse(val),
-                                endDate: snapshot.data?.endDate,
-                                category: snapshot.data?.category,
-                              );
-                            },
-                            validator: (val) {
-                              return null;
-                            },
-                            onSaved: (val) {
-                              _bloc.update(
-                                startDate: DateTime.parse(val!),
-                                endDate: snapshot.data?.endDate,
-                                category: snapshot.data?.category,
-                              );
-                            },
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Flexible(
-                          child: DateTimePicker(
-                            type: DateTimePickerType.date,
-                            dateMask: 'd MMM, yyyy',
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              label: Text("End Date"),
-                            ),
-                            initialValue: snapshot.data!.endDate.toString(),
-                            firstDate: snapshot.data!.startDate,
-                            lastDate: DateTime(DateTime.now().year + 1),
-                            icon: Icon(Icons.event),
-                            onChanged: (val) {
-                              print(val);
-                              _bloc.update(
-                                endDate: DateTime.parse(val),
-                                startDate: snapshot.data?.startDate,
-                                category: snapshot.data?.category,
-                              );
-                            },
-                            onSaved: (val) {
-                              print(val);
-                              _bloc.update(
-                                endDate: DateTime.parse(val!),
-                                startDate: snapshot.data?.startDate,
-                                category: snapshot.data?.category,
-                              );
-                            },
-                            validator: (val) {
-                              return null;
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  child: TransactionPageDatePicker(
+                      person: person,
+                      transactionPageModel: snapshot.data!,
+                      bloc: _bloc),
                 ),
-                SliverToBoxAdapter(
-                  child: SizedBox(height: 15),
-                ),
-                StreamBuilder<fr.QuerySnapshot>(
-                    stream: fr.FirebaseFirestore.instance
-                        .collection("Categories")
-                        .doc(person.id)
-                        .collection("Categories")
-                        .snapshots(),
-                    builder: (context, catSnapshot) {
-                      if (!catSnapshot.hasData) {
-                        return SliverToBoxAdapter();
-                      } else {
-                        List<Category> _catList = catSnapshot.data!.docs
-                            .map((e) => Category.fromDocumentSnapshot(e))
-                            .toList();
-                        return SliverToBoxAdapter(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: SelectFormField(
-                              type: SelectFormFieldType.dropdown,
-                              decoration: InputDecoration(
-                                label: Text("  Category"),
-                                suffixIcon: Icon(Icons.arrow_drop_down),
-                                suffix: IconButton(
-                                  onPressed: () {
-                                    _bloc.update(
-                                      startDate: snapshot.data?.startDate,
-                                      endDate: snapshot.data?.endDate,
-                                      category: Category(
-                                          iconData: Icons.ac_unit, title: ""),
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.clear,
-                                  ),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 4),
-                                // isDense: true,
-                                isCollapsed: true,
-                                border: OutlineInputBorder(),
-                              ),
-                              items: _catList
-                                  .map((e) => <String, dynamic>{
-                                        "value": json.encode(e.toMap),
-                                        "label": e.title,
-                                        "icon": Icon(e.iconData),
-                                      })
-                                  .toList(),
-                              onChanged: (val) {
-                                _bloc.update(
-                                  startDate: snapshot.data?.startDate,
-                                  endDate: snapshot.data?.endDate,
-                                  category: Category.fromDynamic(
-                                    json.decode(val),
-                                  ),
-                                );
-                              },
-                              onSaved: (val) {
-                                _bloc.update(
-                                  startDate: snapshot.data?.startDate,
-                                  endDate: snapshot.data?.endDate,
-                                  category: Category.fromDynamic(
-                                    json.decode(val!),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        );
-                      }
-                    }),
+                SliverToBoxAdapter(child: SizedBox(height: 15)),
+                TransactionPageCategoriesPicker(
+                    person: person,
+                    transactionPageModel: snapshot.data!,
+                    bloc: _bloc),
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),

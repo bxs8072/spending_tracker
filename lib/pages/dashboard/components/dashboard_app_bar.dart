@@ -1,6 +1,7 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
+import 'package:theme_provider/theme_provider.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/tools/get_random_color.dart';
 
@@ -16,11 +17,16 @@ class DashboardAppBar extends StatelessWidget {
       pinned: true,
       stretch: true,
       backgroundColor: Colors.transparent,
-      leading: Container(
-        height: _size.height * 0.22,
-        width: _size.height * 0.22,
-        child: FlareActor("assets/animations/Dragon.flr",
-            animation: "Untitled", color: getRandomColor(context)),
+      foregroundColor:
+          ThemeProvider.controllerOf(context).currentThemeId == "dark"
+              ? Colors.white
+              : Colors.black,
+      leading: FlareActor(
+        "assets/animations/Dragon.flr",
+        animation: "Untitled",
+        color: ThemeProvider.controllerOf(context).currentThemeId == "dark"
+            ? Colors.white
+            : Colors.black,
       ),
       actions: [
         IconButton(

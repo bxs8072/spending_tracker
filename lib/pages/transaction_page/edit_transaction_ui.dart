@@ -217,6 +217,7 @@ class _EditTransactionsUIState extends State<EditTransactionsUI> {
                         ],
                       ),
                       SizedBox(height: 10),
+                      // ignore: deprecated_member_use
                       RaisedButton(
                         onPressed: () {
                           fr.FirebaseFirestore.instance
@@ -228,7 +229,7 @@ class _EditTransactionsUIState extends State<EditTransactionsUI> {
                                       title: _titleController.text.trim(),
                                       description:
                                           _descriptionController.text.trim(),
-                                      createdAt: fr.Timestamp.now(),
+                                      createdAt: widget.transaction.createdAt,
                                       amount: double.parse(
                                           _amountController.text.trim()),
                                       transactionType: _transactionType!,
@@ -236,6 +237,54 @@ class _EditTransactionsUIState extends State<EditTransactionsUI> {
                                       priority: _priority!)
                                   .toMap)
                               .then((value) {
+                            if (widget.transaction.transactionType !=
+                                _transactionType) {
+                              if (_transactionType == TransactionType.expense) {
+                                fr.FirebaseFirestore.instance
+                                    .collection("Users")
+                                    .doc(widget.person.id)
+                                    .update({
+                                  "balance": widget.person.balance -
+                                      double.parse(
+                                          _amountController.text.trim()),
+                                });
+                              } else {
+                                fr.FirebaseFirestore.instance
+                                    .collection("Users")
+                                    .doc(widget.person.id)
+                                    .update({
+                                  "balance": widget.person.balance +
+                                      double.parse(
+                                          _amountController.text.trim()),
+                                });
+                              }
+                            }
+
+                            if (widget.transaction.amount !=
+                                double.parse(_amountController.text.trim())) {
+                              if (_transactionType == TransactionType.income) {
+                                fr.FirebaseFirestore.instance
+                                    .collection("Users")
+                                    .doc(widget.person.id)
+                                    .update({
+                                  "balance": widget.person.balance -
+                                      widget.transaction.amount +
+                                      double.parse(
+                                          _amountController.text.trim()),
+                                });
+                              } else {
+                                fr.FirebaseFirestore.instance
+                                    .collection("Users")
+                                    .doc(widget.person.id)
+                                    .update({
+                                  "balance": widget.person.balance +
+                                      widget.transaction.amount -
+                                      double.parse(
+                                          _amountController.text.trim()),
+                                });
+                              }
+                            }
+                          }).then((value) {
                             Navigator.of(context).pop();
                           });
                         },
