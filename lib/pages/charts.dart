@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-//outline of the pie, still missing components not ready yet
+//outline of the pie, still missing components not ready yet, some changes to the pubspec.yaml file may be needed, will review
 class MontlyExpensesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
