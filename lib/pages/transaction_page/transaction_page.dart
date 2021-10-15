@@ -125,6 +125,8 @@ class TransactionPage extends StatelessWidget {
                         List<Transaction> _list = snapshot.data!.docs
                             .map((e) => Transaction.fromDynamic(e))
                             .toList();
+                        List<String> _idList =
+                            snapshot.data!.docs.map((e) => e.id).toList();
                         if (_list.isEmpty) {
                           return SliverToBoxAdapter(
                               child: Center(
@@ -146,8 +148,7 @@ class TransactionPage extends StatelessWidget {
                         return TransactionBuilder(
                           person: person,
                           transactionList: _list,
-                          transactionIdList:
-                              snapshot.data!.docs.map((e) => e.id).toList(),
+                          transactionIdList: _idList,
                           key: key,
                         );
                       }),

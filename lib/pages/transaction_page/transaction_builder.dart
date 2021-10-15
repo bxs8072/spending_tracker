@@ -25,7 +25,7 @@ class TransactionBuilder extends StatelessWidget {
       delegate: SliverChildBuilderDelegate(
         (context, i) {
           return Dismissible(
-            key: ValueKey(transactionList[i]),
+            key: ValueKey(transactionIdList[i]),
             secondaryBackground: Card(
               color: Colors.red,
               child: ListTile(
@@ -61,36 +61,30 @@ class TransactionBuilder extends StatelessWidget {
                     );
               } else {
                 fr.FirebaseFirestore.instance
-                    .collection("transactions")
+                    .collection("Transactions")
                     .doc(person.id)
-                    .collection("transactions")
+                    .collection("Transactions")
                     .doc(transactionIdList[i])
-                    .delete();
+                    .delete()
+                    .then((value) {
+                  transactionList[i].transactionType == TransactionType.expense
+                      ? fr.FirebaseFirestore.instance
+                          .collection("Users")
+                          .doc(person.id)
+                          .update({
+                          "balance": person.balance + transactionList[i].amount
+                        })
+                      : fr.FirebaseFirestore.instance
+                          .collection("Users")
+                          .doc(person.id)
+                          .update({
+                          "balance": person.balance - transactionList[i].amount
+                        });
+                });
               }
             },
             confirmDismiss: (dir) async {
-              if (dir == DismissDirection.startToEnd) {
-                List<Category> _items = [];
-                await fr.FirebaseFirestore.instance
-                    .collection("Categories")
-                    .doc(person.id)
-                    .collection("Categories")
-                    .get()
-                    .then(
-                      (value) => customNavigator(
-                        context,
-                        EditTransactionsUI(
-                          person: person,
-                          key: key,
-                          categoryList: value.docs
-                              .map((e) => Category.fromDocumentSnapshot(e))
-                              .toList(),
-                          id: transactionIdList[i],
-                          transaction: transactionList[i],
-                        ),
-                      ),
-                    );
-              } else
+              if (dir == DismissDirection.endToStart) {
                 return showDialog(
                     context: context,
                     builder: (ctx) {
@@ -115,6 +109,27 @@ class TransactionBuilder extends StatelessWidget {
                         ),
                       );
                     });
+              } else {
+                await fr.FirebaseFirestore.instance
+                    .collection("Categories")
+                    .doc(person.id)
+                    .collection("Categories")
+                    .get()
+                    .then(
+                      (value) => customNavigator(
+                        context,
+                        EditTransactionsUI(
+                          person: person,
+                          key: key,
+                          categoryList: value.docs
+                              .map((e) => Category.fromDocumentSnapshot(e))
+                              .toList(),
+                          id: transactionIdList[i],
+                          transaction: transactionList[i],
+                        ),
+                      ),
+                    );
+              }
             },
             child: ListTile(
               shape: RoundedRectangleBorder(

@@ -50,7 +50,7 @@ class _EditTransactionsUIState extends State<EditTransactionsUI> {
     ),
   ];
 
-  List<DropdownMenuItem<TransactionType>> _spendTypeItems = [
+  List<DropdownMenuItem<TransactionType>> _transactionTypeItems = [
     DropdownMenuItem(
       child: Text("Expense"),
       value: TransactionType.expense,
@@ -147,6 +147,8 @@ class _EditTransactionsUIState extends State<EditTransactionsUI> {
                           items: _categoryItems,
                           underline: Center(),
                           hint: Text("Categories"),
+                          borderRadius: BorderRadius.circular(20),
+                          alignment: Alignment.center,
                           value: _category,
                           key: ValueKey(_category),
                           onChanged: (val) {
@@ -157,7 +159,7 @@ class _EditTransactionsUIState extends State<EditTransactionsUI> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      Row(
+                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Flexible(
@@ -196,11 +198,11 @@ class _EditTransactionsUIState extends State<EditTransactionsUI> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   children: [
-                                    Text("Transaction Type"),
+                                    Text("Spend Type"),
                                     DropdownButton<TransactionType>(
-                                      items: _spendTypeItems,
+                                      items: _transactionTypeItems,
                                       underline: Center(),
-                                      hint: Text("Transaction Type"),
+                                      hint: Text("Spend Type"),
                                       value: _transactionType,
                                       key: ValueKey(_transactionType),
                                       onChanged: (val) {
@@ -216,6 +218,7 @@ class _EditTransactionsUIState extends State<EditTransactionsUI> {
                           ),
                         ],
                       ),
+                      
                       SizedBox(height: 10),
                       // ignore: deprecated_member_use
                       RaisedButton(
