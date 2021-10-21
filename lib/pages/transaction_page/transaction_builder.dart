@@ -61,11 +61,29 @@ class TransactionBuilder extends StatelessWidget {
                     );
               } else {
                 fr.FirebaseFirestore.instance
-                    .collection("transactions")
+                    .collection("Transactions")
                     .doc(person.id)
-                    .collection("transactions")
+                    .collection("Transactions")
                     .doc(transactionIdList[i])
-                    .delete();
+                    .delete()
+                    .then((value) {
+                  if (transactionList[i].transactionType ==
+                      TransactionType.income) {
+                    fr.FirebaseFirestore.instance
+                        .collection("Users")
+                        .doc(person.id)
+                        .update({
+                      "balance": person.balance - transactionList[i].amount,
+                    });
+                  } else {
+                    fr.FirebaseFirestore.instance
+                        .collection("Users")
+                        .doc(person.id)
+                        .update({
+                      "balance": person.balance + transactionList[i].amount,
+                    });
+                  }
+                });
               }
             },
             confirmDismiss: (dir) async {

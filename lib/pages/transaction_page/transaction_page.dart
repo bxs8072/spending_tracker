@@ -12,6 +12,7 @@ import 'package:uchiha_saving/pages/transaction_page/components/transaction_page
 import 'package:uchiha_saving/pages/transaction_page/select_category_ui.dart';
 import 'package:uchiha_saving/pages/transaction_page/transaction_builder.dart';
 import 'package:uchiha_saving/tools/custom_navigator.dart';
+import 'package:uchiha_saving/uis/transactions_search_ui/transactions_search_ui.dart';
 
 // ignore: must_be_immutable
 class TransactionPage extends StatelessWidget {
@@ -53,16 +54,31 @@ class TransactionPage extends StatelessWidget {
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
+                    pinned: true,
                     title: Text(
                       "Transactions",
                     ),
-                    pinned: true,
+                    expandedHeight: MediaQuery.of(context).size.height * 0.1,
+                    backgroundColor: Colors.transparent,
                     foregroundColor:
                         ThemeProvider.controllerOf(context).currentThemeId ==
                                 "dark"
                             ? Colors.white
                             : Colors.black,
-                    backgroundColor: Colors.transparent,
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          customNavigator(
+                            context,
+                            TransactionSearchUI(person: person),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.search,
+                          size: MediaQuery.of(context).size.height * 0.04,
+                        ),
+                      ),
+                    ],
                   ),
                   SliverToBoxAdapter(
                     child: TransactionPageDatePicker(
@@ -75,15 +91,17 @@ class TransactionPage extends StatelessWidget {
                       person: person,
                       transactionPageModel: snapshot.data!,
                       bloc: _bloc),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        "Transactions",
-                        style: GoogleFonts.lato(fontSize: _size.height * 0.024),
-                      ),
-                    ),
-                  ),
+                  // SliverToBoxAdapter(
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(12.0),
+                  //     child: Text(
+                  //       "Transactions",
+                  //       style: GoogleFonts.lato(fontSize: _size.height * 0.024),
+                  //     ),
+                  //   ),
+                  // ),
+                  SliverToBoxAdapter(child: SizedBox(height: 15)),
+
                   StreamBuilder<fr.QuerySnapshot>(
                       stream: snapshot.data!.category?.title == ""
                           ? fr.FirebaseFirestore.instance

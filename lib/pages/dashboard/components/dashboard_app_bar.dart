@@ -23,13 +23,13 @@ class DashboardAppBar extends StatelessWidget {
           ThemeProvider.controllerOf(context).currentThemeId == "dark"
               ? Colors.white
               : Colors.black,
-      leading: FlareActor(
-        "assets/animations/Dragon.flr",
-        animation: "Untitled",
-        color: ThemeProvider.controllerOf(context).currentThemeId == "dark"
-            ? Colors.white
-            : Colors.black,
-      ),
+      // leading: FlareActor(
+      //   "assets/animations/Dragon.flr",
+      //   animation: "Untitled",
+      //   color: ThemeProvider.controllerOf(context).currentThemeId == "dark"
+      //       ? Colors.white
+      //       : Colors.black,
+      // ),
       actions: [
         IconButton(
           onPressed: () {
