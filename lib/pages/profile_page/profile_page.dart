@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/pages/profile_page/components/image_logo.dart';
 import 'package:uchiha_saving/pages/profile_page/components/profile_page_appbar.dart';
+import 'package:uchiha_saving/pages/profile_page/edit_profile/edit_profile_page.dart';
 import 'package:uchiha_saving/tools/custom_navigator.dart';
 import 'package:uchiha_saving/uis/bookmarks_ui/bookmarks_ui.dart';
 import 'package:uchiha_saving/uis/categories_ui/category_ui.dart';
@@ -34,6 +35,17 @@ class ProfilePage extends StatelessWidget {
                   fontSize: _size.height * 0.029,
                 ),
               ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: TextButton(
+              onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx){
+                  return EditProfilePage(
+                    person: person,
+                  );
+                }));
+              }, child: Text('Edit Profile'),
             ),
           ),
           SliverToBoxAdapter(
