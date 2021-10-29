@@ -41,15 +41,13 @@ class ProfilePage extends StatelessWidget {
           SliverToBoxAdapter(
             child: TextButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (ctx) {
-                      return EditProfilePage(person: person);
-                    },
-                  ),
-                );
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+                  return EditProfilePage(
+                    person: person,
+                  );
+                }));
               },
-              child: Text("Edit Profile"),
+              child: Text('Edit Profile'),
             ),
           ),
           SliverToBoxAdapter(
