@@ -12,6 +12,7 @@ import 'package:uchiha_saving/pages/transaction_page/components/transaction_page
 import 'package:uchiha_saving/pages/transaction_page/select_category_ui.dart';
 import 'package:uchiha_saving/pages/transaction_page/transaction_builder.dart';
 import 'package:uchiha_saving/tools/custom_navigator.dart';
+import 'package:uchiha_saving/uis/chart_ui/chart_ui.dart';
 import 'package:uchiha_saving/uis/transactions_search_ui/transactions_search_ui.dart';
 
 // ignore: must_be_immutable
@@ -29,29 +30,29 @@ class TransactionPage extends StatelessWidget {
       onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            customNavigator(context, SelectCategoryUI(person: person));
-          },
-          backgroundColor:
-              ThemeProvider.controllerOf(context).currentThemeId == "dark"
-                  ? Colors.white
-                  : Colors.black,
-          child: Icon(Icons.add,
-              color:
-                  ThemeProvider.controllerOf(context).currentThemeId == "dark"
-                      ? Colors.black
-                      : Colors.white),
-        ),
-        body: StreamBuilder<TransactionPageModel>(
-            initialData: TransactionPageModel(
-              startDate: DateTime(DateTime.now().year, DateTime.now().month),
-              endDate: DateTime.now(),
-            ),
-            stream: _bloc.stream,
-            builder: (context, snapshot) {
-              return CustomScrollView(
+      child: StreamBuilder<TransactionPageModel>(
+          initialData: TransactionPageModel(
+            startDate: DateTime(DateTime.now().year, DateTime.now().month),
+            endDate: DateTime.now(),
+          ),
+          stream: _bloc.stream,
+          builder: (context, snapshot) {
+            return Scaffold(
+              floatingActionButton: FloatingActionButton(
+                onPressed: () async {
+                  customNavigator(context, SelectCategoryUI(person: person));
+                },
+                backgroundColor:
+                    ThemeProvider.controllerOf(context).currentThemeId == "dark"
+                        ? Colors.white
+                        : Colors.black,
+                child: Icon(Icons.add,
+                    color: ThemeProvider.controllerOf(context).currentThemeId ==
+                            "dark"
+                        ? Colors.black
+                        : Colors.white),
+              ),
+              body: CustomScrollView(
                 slivers: [
                   SliverAppBar(
                     pinned: true,
@@ -80,28 +81,27 @@ class TransactionPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SliverToBoxAdapter(
-                    child: TransactionPageDatePicker(
-                        person: person,
-                        transactionPageModel: snapshot.data!,
-                        bloc: _bloc),
-                  ),
-                  SliverToBoxAdapter(child: SizedBox(height: 15)),
-                  TransactionPageCategoriesPicker(
-                      person: person,
-                      transactionPageModel: snapshot.data!,
-                      bloc: _bloc),
+
                   // SliverToBoxAdapter(
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(12.0),
-                  //     child: Text(
-                  //       "Transactions",
-                  //       style: GoogleFonts.lato(fontSize: _size.height * 0.024),
+                  //   child: GestureDetector(
+                  //     onTap: () {
+                  //       Navigator.push(context,
+                  //           MaterialPageRoute(builder: (context) {
+                  //         return ChartUI(
+                  //           person: person,
+                  //           key: key,
+                  //         );
+                  //       }));
+                  //     },
+                  //     child: Card(
+                  //       child: Container(
+                  //         height: _size.height * 0.3,
+                  //       ),
                   //     ),
                   //   ),
                   // ),
-                  SliverToBoxAdapter(child: SizedBox(height: 15)),
 
+                  SliverToBoxAdapter(child: SizedBox(height: 15)),
                   StreamBuilder<fr.QuerySnapshot>(
                       stream: snapshot.data!.category?.title == ""
                           ? fr.FirebaseFirestore.instance
@@ -168,11 +168,32 @@ class TransactionPage extends StatelessWidget {
                               snapshot.data!.docs.map((e) => e.id).toList(),
                           key: key,
                         );
-                      }),
+                      }), //
                 ],
-              );
-            }),
-      ),
+              ),
+              bottomNavigationBar: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomScrollView(
+                    shrinkWrap: true,
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: TransactionPageDatePicker(
+                            person: person,
+                            transactionPageModel: snapshot.data!,
+                            bloc: _bloc),
+                      ),
+                      SliverToBoxAdapter(child: SizedBox(height: 15)),
+                      TransactionPageCategoriesPicker(
+                          person: person,
+                          transactionPageModel: snapshot.data!,
+                          bloc: _bloc),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
     );
   }
 }

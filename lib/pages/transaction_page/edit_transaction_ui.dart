@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:uchiha_saving/models/category.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/models/transaction.dart';
+import 'package:uchiha_saving/tools/categories_list.dart';
 
 class EditTransactionsUI extends StatefulWidget {
   final Person person;
-  final List<Category> categoryList;
   final Transaction transaction;
   final String id;
   const EditTransactionsUI({
     Key? key,
     required this.person,
-    required this.categoryList,
     required this.transaction,
     required this.id,
   }) : super(key: key);
@@ -61,7 +60,7 @@ class _EditTransactionsUIState extends State<EditTransactionsUI> {
     ),
   ];
 
-  List<DropdownMenuItem<Category>> get _categoryItems => widget.categoryList
+  List<DropdownMenuItem<Category>> get _categoryItems => categoryList
       .map(
         (e) => DropdownMenuItem<Category>(
           child: Row(
@@ -236,55 +235,56 @@ class _EditTransactionsUIState extends State<EditTransactionsUI> {
                                       category: _category!,
                                       priority: _priority!)
                                   .toMap)
-                              .then((value) {
-                            if (widget.transaction.transactionType !=
-                                _transactionType) {
-                              if (_transactionType == TransactionType.expense) {
-                                fr.FirebaseFirestore.instance
-                                    .collection("Users")
-                                    .doc(widget.person.id)
-                                    .update({
-                                  "balance": widget.person.balance -
-                                      double.parse(
-                                          _amountController.text.trim()),
-                                });
-                              } else {
-                                fr.FirebaseFirestore.instance
-                                    .collection("Users")
-                                    .doc(widget.person.id)
-                                    .update({
-                                  "balance": widget.person.balance +
-                                      double.parse(
-                                          _amountController.text.trim()),
-                                });
-                              }
-                            }
+                              //     .then((value) {
+                              //   if (widget.transaction.transactionType !=
+                              //       _transactionType) {
+                              //     if (_transactionType == TransactionType.expense) {
+                              //       fr.FirebaseFirestore.instance
+                              //           .collection("Users")
+                              //           .doc(widget.person.id)
+                              //           .update({
+                              //         "balance": widget.person.balance -
+                              //             double.parse(
+                              //                 _amountController.text.trim()),
+                              //       });
+                              //     } else {
+                              //       fr.FirebaseFirestore.instance
+                              //           .collection("Users")
+                              //           .doc(widget.person.id)
+                              //           .update({
+                              //         "balance": widget.person.balance +
+                              //             double.parse(
+                              //                 _amountController.text.trim()),
+                              //       });
+                              //     }
+                              //   }
 
-                            if (widget.transaction.amount !=
-                                double.parse(_amountController.text.trim())) {
-                              if (_transactionType == TransactionType.income) {
-                                fr.FirebaseFirestore.instance
-                                    .collection("Users")
-                                    .doc(widget.person.id)
-                                    .update({
-                                  "balance": widget.person.balance -
-                                      widget.transaction.amount +
-                                      double.parse(
-                                          _amountController.text.trim()),
-                                });
-                              } else {
-                                fr.FirebaseFirestore.instance
-                                    .collection("Users")
-                                    .doc(widget.person.id)
-                                    .update({
-                                  "balance": widget.person.balance +
-                                      widget.transaction.amount -
-                                      double.parse(
-                                          _amountController.text.trim()),
-                                });
-                              }
-                            }
-                          }).then((value) {
+                              //   if (widget.transaction.amount !=
+                              //       double.parse(_amountController.text.trim())) {
+                              //     if (_transactionType == TransactionType.income) {
+                              //       fr.FirebaseFirestore.instance
+                              //           .collection("Users")
+                              //           .doc(widget.person.id)
+                              //           .update({
+                              //         "balance": widget.person.balance -
+                              //             widget.transaction.amount +
+                              //             double.parse(
+                              //                 _amountController.text.trim()),
+                              //       });
+                              //     } else {
+                              //       fr.FirebaseFirestore.instance
+                              //           .collection("Users")
+                              //           .doc(widget.person.id)
+                              //           .update({
+                              //         "balance": widget.person.balance +
+                              //             widget.transaction.amount -
+                              //             double.parse(
+                              //                 _amountController.text.trim()),
+                              //       });
+                              //     }
+                              //   }
+                              // })
+                              .then((value) {
                             Navigator.of(context).pop();
                           });
                         },

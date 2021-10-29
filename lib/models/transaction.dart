@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uchiha_saving/models/category.dart';
+import 'package:uchiha_saving/tools/categories_list.dart';
 
 enum TransactionType { income, expense }
 
@@ -27,7 +28,7 @@ class Transaction {
         "createdAt": createdAt,
         "amount": amount,
         "transactionType": transactionTypeToString(transactionType),
-        "category": category.toMap,
+        "category": category.title,
         "priority": priority,
       };
 
@@ -42,7 +43,8 @@ class Transaction {
   factory Transaction.fromDynamic(dynamic data) {
     return Transaction(
       amount: data["amount"],
-      category: Category.fromDynamic(data["category"]),
+      category: categoryList
+          .firstWhere((element) => element.title == data["category"]),
       createdAt: data["createdAt"],
       description: data["description"],
       priority: data["priority"],

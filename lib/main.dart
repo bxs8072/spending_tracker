@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:theme_provider/theme_provider.dart';
+import 'package:uchiha_saving/learn/basic_page.dart';
+import 'package:uchiha_saving/pages/profile_page/edit_profile/edit_profile_page.dart';
 import 'package:uchiha_saving/screens/landing_screen/landing_screen.dart';
 
 void main() async {
@@ -29,7 +31,9 @@ class MyApp extends StatelessWidget {
           builder: (themeContext) => MaterialApp(
             theme: ThemeProvider.themeOf(themeContext).data,
             debugShowCheckedModeBanner: false,
-            home: LandingScreen(),
+            home:
+                //BasicPage(),
+                LandingScreen(),
           ),
         ),
       ),

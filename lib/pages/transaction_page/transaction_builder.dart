@@ -40,25 +40,14 @@ class TransactionBuilder extends StatelessWidget {
             ),
             onDismissed: (dir) {
               if (dir == DismissDirection.startToEnd) {
-                fr.FirebaseFirestore.instance
-                    .collection("Categories")
-                    .doc(person.id)
-                    .collection("Categories")
-                    .get()
-                    .then(
-                      (value) => customNavigator(
-                        context,
-                        EditTransactionsUI(
-                          person: person,
-                          key: key,
-                          categoryList: value.docs
-                              .map((e) => Category.fromDocumentSnapshot(e))
-                              .toList(),
-                          id: transactionIdList[i],
-                          transaction: transactionList[i],
-                        ),
-                      ),
-                    );
+                customNavigator(
+                    context,
+                    EditTransactionsUI(
+                      person: person,
+                      key: key,
+                      id: transactionIdList[i],
+                      transaction: transactionList[i],
+                    ));
               } else {
                 fr.FirebaseFirestore.instance
                     .collection("Transactions")
@@ -89,25 +78,14 @@ class TransactionBuilder extends StatelessWidget {
             confirmDismiss: (dir) async {
               if (dir == DismissDirection.startToEnd) {
                 List<Category> _items = [];
-                await fr.FirebaseFirestore.instance
-                    .collection("Categories")
-                    .doc(person.id)
-                    .collection("Categories")
-                    .get()
-                    .then(
-                      (value) => customNavigator(
-                        context,
-                        EditTransactionsUI(
-                          person: person,
-                          key: key,
-                          categoryList: value.docs
-                              .map((e) => Category.fromDocumentSnapshot(e))
-                              .toList(),
-                          id: transactionIdList[i],
-                          transaction: transactionList[i],
-                        ),
-                      ),
-                    );
+                customNavigator(
+                    context,
+                    EditTransactionsUI(
+                      person: person,
+                      key: key,
+                      id: transactionIdList[i],
+                      transaction: transactionList[i],
+                    ));
               } else
                 return showDialog(
                     context: context,

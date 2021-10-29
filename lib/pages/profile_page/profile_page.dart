@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/pages/profile_page/components/image_logo.dart';
 import 'package:uchiha_saving/pages/profile_page/components/profile_page_appbar.dart';
+import 'package:uchiha_saving/pages/profile_page/edit_profile/edit_profile_page.dart';
 import 'package:uchiha_saving/tools/custom_navigator.dart';
 import 'package:uchiha_saving/uis/bookmarks_ui/bookmarks_ui.dart';
-import 'package:uchiha_saving/uis/categories_ui/category_ui.dart';
 
 class ProfilePage extends StatelessWidget {
   final Person person;
@@ -19,7 +19,9 @@ class ProfilePage extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           ProfilePageAppBar(person: person, key: key),
-          SliverToBoxAdapter(child: ImageLogo(person: person, key: key)),
+          SliverToBoxAdapter(
+            child: ImageLogo(person: person, key: key),
+          ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -34,6 +36,20 @@ class ProfilePage extends StatelessWidget {
                   fontSize: _size.height * 0.029,
                 ),
               ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) {
+                      return EditProfilePage(person: person);
+                    },
+                  ),
+                );
+              },
+              child: Text("Edit Profile"),
             ),
           ),
           SliverToBoxAdapter(
@@ -87,17 +103,6 @@ class ProfilePage extends StatelessWidget {
                   child: Column(
                     children: [
                       ListTile(
-                        leading: Icon(Icons.category),
-                        title: Text(
-                          "Categories",
-                          style: GoogleFonts.lato(),
-                        ),
-                        onTap: () {
-                          customNavigator(
-                              context, CategoriesUI(person: person));
-                        },
-                      ),
-                      ListTile(
                         leading: Icon(Icons.book),
                         title: Text(
                           "FAQ and Policies",
@@ -113,7 +118,9 @@ class ProfilePage extends StatelessWidget {
                         ),
                         onTap: () {
                           customNavigator(
-                              context, BookmarksUI(person: person, key: key));
+                            context,
+                            BookmarksUI(person: person, key: key),
+                          );
                         },
                       ),
                     ],

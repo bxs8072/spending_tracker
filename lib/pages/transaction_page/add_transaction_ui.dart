@@ -183,24 +183,6 @@ class _AddTransactionsUIState extends State<AddTransactionsUI> {
                                       priority: _priority!)
                                   .toMap)
                               .then((value) {
-                            if (_transactionType! == TransactionType.income) {
-                              fr.FirebaseFirestore.instance
-                                  .collection("Users")
-                                  .doc(widget.person.id)
-                                  .update({
-                                "balance": widget.person.balance +
-                                    double.parse(_amountController.text.trim()),
-                              });
-                            } else {
-                              fr.FirebaseFirestore.instance
-                                  .collection("Users")
-                                  .doc(widget.person.id)
-                                  .update({
-                                "balance": widget.person.balance -
-                                    double.parse(_amountController.text.trim()),
-                              });
-                            }
-                          }).then((value) {
                             Navigator.of(context).pop();
                           });
                         },

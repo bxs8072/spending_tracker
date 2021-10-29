@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uchiha_saving/models/category.dart';
+import 'package:uchiha_saving/tools/categories_list.dart';
 
 class Save {
   final String title;
@@ -24,7 +25,7 @@ class Save {
         "createdAt": createdAt,
         "expiredAt": expiredAt,
         "amount": amount,
-        "category": category.toMap,
+        "category": category.title,
       };
 
   factory Save.fromDynamic(dynamic data) {
@@ -34,7 +35,8 @@ class Save {
       createdAt: data["createdAt"],
       expiredAt: data["expiredAt"],
       amount: data["amount"],
-      category: Category.fromDynamic(data["category"]),
+      category: categoryList
+          .firstWhere((element) => element.title == data["category"]),
     );
   }
 }

@@ -103,13 +103,11 @@ class _TransactionSearchUIState extends State<TransactionSearchUI> {
                         ),
                       ));
                     }
-
                     return TransactionBuilder(
                       person: widget.person,
                       transactionList: _list,
                       transactionIdList:
                           snapshot.data!.docs.map((e) => e.id).toList(),
-                      key: widget.key,
                     );
                   }),
             ),

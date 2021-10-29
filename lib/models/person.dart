@@ -4,12 +4,12 @@ import 'package:uchiha_saving/models/name.dart';
 
 class Person {
   final String id;
-  final Name name;
+  final Name name; //
   final String photoURL;
   final double balance;
-  final String phone;
+  final String phone; //
   final String email;
-  final Address address;
+  final Address address; //
 
   Person({
     required this.id,
