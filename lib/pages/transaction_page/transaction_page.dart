@@ -40,7 +40,10 @@ class TransactionPage extends StatelessWidget {
             return Scaffold(
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
-                  customNavigator(context, SelectCategoryUI(person: person));
+                  customNavigator(
+                    context,
+                    SelectCategoryUI(person: person),
+                  );
                 },
                 backgroundColor:
                     ThemeProvider.controllerOf(context).currentThemeId == "dark"

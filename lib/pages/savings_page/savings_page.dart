@@ -10,7 +10,6 @@ import 'package:uchiha_saving/models/save.dart';
 import 'package:uchiha_saving/models/transaction.dart';
 import 'package:uchiha_saving/pages/savings_page/components/create_goal_card.dart';
 import 'package:uchiha_saving/tools/custom_navigator.dart';
-import 'package:uchiha_saving/uis/create_goal_ui/create_target_ui.dart';
 import 'package:uchiha_saving/uis/edit_goal_ui/edit_goal_ui.dart';
 
 class SavingsPage extends StatefulWidget {
@@ -93,10 +92,6 @@ class _SavingsPageState extends State<SavingsPage> {
                     children: [
                       Card(
                         elevation: 15,
-                        // color: getRandomColor(context),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -172,7 +167,6 @@ class _SavingsPageState extends State<SavingsPage> {
                                         fontSize: _size.height * 0.023,
                                       ),
                                     ),
-                                    SizedBox(height: 10),
                                   ],
                                 ),
                               ),

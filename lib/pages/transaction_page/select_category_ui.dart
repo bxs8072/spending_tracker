@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uchiha_saving/models/category.dart';
 import 'package:uchiha_saving/models/person.dart';
-import 'package:cloud_firestore/cloud_firestore.dart' as fr;
 import 'package:uchiha_saving/pages/transaction_page/add_transaction_ui.dart';
 import 'package:uchiha_saving/tools/categories_list.dart';
 import 'package:uchiha_saving/tools/custom_navigator.dart';
