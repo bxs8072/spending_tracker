@@ -20,52 +20,34 @@ class TransactionPageCategoriesPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    categoryList.add(Category(iconData: Icons.dashboard, title: "All"));
     return SliverToBoxAdapter(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.0),
-        child: SelectFormField(
-          type: SelectFormFieldType.dropdown,
-          decoration: InputDecoration(
-            label: Text("  Category"),
-            suffixIcon: Icon(Icons.arrow_drop_down),
-            suffix: IconButton(
-              onPressed: () {
-                bloc.update(
-                  startDate: transactionPageModel.startDate,
-                  endDate: transactionPageModel.endDate,
-                  category: Category(iconData: Icons.ac_unit, title: ""),
-                );
-              },
-              icon: Icon(
-                Icons.clear,
+        child: DropdownButton<Category>(
+          isExpanded: true,
+          underline: Center(),
+          value: transactionPageModel.category,
+          hint: Text(" Category"),
+          items: categoryList.map((Category value) {
+            return DropdownMenuItem<Category>(
+              value: value,
+              child: Row(
+                children: [
+                  Icon(value.iconData),
+                  Text(" " + value.title),
+                ],
               ),
-            ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            // isDense: true,
-            isCollapsed: true,
-            border: OutlineInputBorder(),
-          ),
-          items: categoryList
-              .map((e) => <String, dynamic>{
-                    "value": e.title,
-                    "label": e.title,
-                    "icon": Icon(e.iconData),
-                  })
-              .toList(),
-          onChanged: (val) {
-            bloc.update(
-              startDate: transactionPageModel.startDate,
-              endDate: transactionPageModel.endDate,
-              category: categoryList.firstWhere(
-                  (element) => element.title == json.decode(val)["value"]),
             );
-          },
-          onSaved: (val) {
+          }).toList(),
+          onChanged: (value) {
             bloc.update(
               startDate: transactionPageModel.startDate,
               endDate: transactionPageModel.endDate,
-              category: categoryList.firstWhere(
-                  (element) => element.title == json.decode(val!)["value"]),
+              category: value!.title == "All"
+                  ? null
+                  : categoryList
+                      .firstWhere((element) => element.title == value.title),
             );
           },
         ),
@@ -73,3 +55,50 @@ class TransactionPageCategoriesPicker extends StatelessWidget {
     );
   }
 }
+
+// SelectFormField(
+//           type: SelectFormFieldType.dropdown,
+//           decoration: InputDecoration(
+//             label: Text("  Category"),
+//             suffixIcon: Icon(Icons.arrow_drop_down),
+//             suffix: IconButton(
+//               onPressed: () {
+//                 bloc.update(
+//                   startDate: transactionPageModel.startDate,
+//                   endDate: transactionPageModel.endDate,
+//                   category: Category(iconData: Icons.ac_unit, title: ""),
+//                 );
+//               },
+//               icon: Icon(
+//                 Icons.clear,
+//               ),
+//             ),
+//             contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+//             // isDense: true,
+//             isCollapsed: true,
+//             border: OutlineInputBorder(),
+//           ),
+//           items: categoryList
+//               .map((e) => <String, dynamic>{
+//                     "value": e.title,
+//                     "label": e.title,
+//                     "icon": Icon(e.iconData),
+//                   })
+//               .toList(),
+//           onChanged: (val) {
+//             bloc.update(
+//               startDate: transactionPageModel.startDate,
+//               endDate: transactionPageModel.endDate,
+//               category:
+//                   categoryList.firstWhere((element) => element.title == val),
+//             );
+//           },
+//           onSaved: (val) {
+//             bloc.update(
+//               startDate: transactionPageModel.startDate,
+//               endDate: transactionPageModel.endDate,
+//               category:
+//                   categoryList.firstWhere((element) => element.title == val),
+//             );
+//           },
+//         ),

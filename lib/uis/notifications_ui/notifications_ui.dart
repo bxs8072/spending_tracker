@@ -58,41 +58,43 @@ class NotificationsUI extends StatelessWidget {
                         )
                       : SliverList(
                           delegate: SliverChildBuilderDelegate((context, i) {
-                            return Container(
-                              margin: EdgeInsets.all(10),
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
+                            return Card(
+                              child: Container(
+                                margin: EdgeInsets.all(10),
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.all(10),
+                                        child: Text(
+                                          _items[i]['title'],
+                                          style:
+                                              GoogleFonts.allerta(fontSize: 16),
+                                        )),
+                                    Container(
                                       alignment: Alignment.center,
                                       padding: EdgeInsets.all(10),
+                                      margin: EdgeInsets.only(bottom: 10),
                                       child: Text(
-                                        _items[i]['title'],
+                                        _items[i]['content'],
                                         style:
                                             GoogleFonts.allerta(fontSize: 16),
-                                      )),
-                                  Image.network(_items[i]['image']),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.all(10),
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    child: Text(
-                                      _items[i]['content'],
-                                      style: GoogleFonts.allerta(fontSize: 16),
+                                      ),
                                     ),
-                                  ),
-                                  RaisedButton(
-                                    color: Colors.blue,
-                                    onPressed: () async {
-                                      await launch(_items[i]['link']);
-                                    },
-                                    child: Text(
-                                      _items[i]['btnName'],
-                                      style: GoogleFonts.allerta(
-                                          color: Colors.white, fontSize: 16),
+                                    TextButton(
+                                      onPressed: () {
+                                        FirebaseFirestore.instance
+                                            .collection('Notifications')
+                                            .doc(snapshot.data!.docs
+                                                .map((e) => e.id)
+                                                .toList()[i])
+                                            .delete();
+                                      },
+                                      child: Text("Delete"),
                                     ),
-                                  )
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           }, childCount: _items.length),

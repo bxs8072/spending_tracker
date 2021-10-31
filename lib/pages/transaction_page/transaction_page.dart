@@ -85,24 +85,25 @@ class TransactionPage extends StatelessWidget {
                     ],
                   ),
 
-                  // SliverToBoxAdapter(
-                  //   child: GestureDetector(
-                  //     onTap: () {
-                  //       Navigator.push(context,
-                  //           MaterialPageRoute(builder: (context) {
-                  //         return ChartUI(
-                  //           person: person,
-                  //           key: key,
-                  //         );
-                  //       }));
-                  //     },
-                  //     child: Card(
-                  //       child: Container(
-                  //         height: _size.height * 0.3,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  SliverToBoxAdapter(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ChartUI(
+                            person: person,
+                            key: key,
+                          );
+                        }));
+                      },
+                      child: Card(
+                        child: Container(
+                          height: _size.height * 0.3,
+                          child: Text("Show Chart"),
+                        ),
+                      ),
+                    ),
+                  ),
 
                   SliverToBoxAdapter(child: SizedBox(height: 15)),
                   StreamBuilder<fr.QuerySnapshot>(
@@ -132,7 +133,7 @@ class TransactionPage extends StatelessWidget {
                               .where("createdAt",
                                   isLessThanOrEqualTo: fr.Timestamp.fromDate(
                                       DateTime(snapshot.data!.endDate!.year, snapshot.data!.endDate!.month, snapshot.data!.endDate!.day + 1)))
-                              .where("category.title", isEqualTo: snapshot.data!.category?.title)
+                              .where("category", isEqualTo: snapshot.data!.category?.title)
                               .orderBy("createdAt", descending: true)
                               .snapshots(),
                       builder: (context, snapshot) {
@@ -148,20 +149,14 @@ class TransactionPage extends StatelessWidget {
                             .toList();
                         if (_list.isEmpty) {
                           return SliverToBoxAdapter(
-                              child: Center(
-                            child: Column(
-                              children: [
-                                SizedBox(height: _size.height * 0.2),
-                                Text(
-                                  "Cannot find any transactions\n😐😐😐",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.lato(
-                                    fontSize: _size.height * 0.023,
-                                  ),
-                                ),
-                              ],
+                            child: Text(
+                              "Cannot find any transactions\n😐😐😐",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.lato(
+                                fontSize: _size.height * 0.023,
+                              ),
                             ),
-                          ));
+                          );
                         }
 
                         return TransactionBuilder(
@@ -180,17 +175,17 @@ class TransactionPage extends StatelessWidget {
                   child: CustomScrollView(
                     shrinkWrap: true,
                     slivers: [
+                      TransactionPageCategoriesPicker(
+                          person: person,
+                          transactionPageModel: snapshot.data!,
+                          bloc: _bloc),
+                      SliverToBoxAdapter(child: SizedBox(height: 15)),
                       SliverToBoxAdapter(
                         child: TransactionPageDatePicker(
                             person: person,
                             transactionPageModel: snapshot.data!,
                             bloc: _bloc),
                       ),
-                      SliverToBoxAdapter(child: SizedBox(height: 15)),
-                      TransactionPageCategoriesPicker(
-                          person: person,
-                          transactionPageModel: snapshot.data!,
-                          bloc: _bloc),
                     ],
                   ),
                 ),

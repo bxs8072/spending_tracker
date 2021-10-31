@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uchiha_saving/api/auth.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/pages/articles_page/articles_page.dart';
@@ -9,6 +12,8 @@ import 'package:uchiha_saving/pages/savings_page/savings_page.dart';
 import 'package:uchiha_saving/pages/transaction_page/transaction_page.dart';
 import 'package:uchiha_saving/screens/create_account_screen/create_account_screen.dart';
 import 'package:uchiha_saving/screens/home_screen/components/bottom_navigation_bar_item_list.dart';
+import 'package:uchiha_saving/tools/custom_navigator.dart';
+import 'package:uchiha_saving/uis/notifications_ui/notifications_ui.dart';
 
 class HomeScreen extends StatefulWidget {
   final Person person;
@@ -28,6 +33,37 @@ class _HomeScreenState extends State<HomeScreen> {
         SavingsPage(person: person, key: widget.key),
         ProfilePage(person: person, key: widget.key),
       ];
+
+  FirebaseMessaging _fcm = FirebaseMessaging.instance;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fcm.subscribeToTopic(widget.person.id);
+    _fcm.getToken().then((token) {
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(widget.person.id)
+          .update({"androidNotificationToken": token});
+    });
+
+    FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
+      customNavigator(context, NotificationsUI(person: widget.person));
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      Fluttertoast.showToast(
+        msg: message.data["body"],
+      );
+    });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print(message.data);
+      Fluttertoast.showToast(
+        msg: message.data["body"],
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

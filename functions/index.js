@@ -47,9 +47,10 @@ exports.onCreateTransaction = functions.firestore
 exports.onUpdateTransaction = functions.firestore
     .document("/Transactions/{userId}/Transactions/{transactionId}")
     .onUpdate(async (change, context) => {
-        console.log("Transaction Update", snapshot.id);
         const userId = context.params.userId;
+
         const transactionId = context.params.transactionId;
+        console.log("Transaction Update", transactionId);
 
         const transactionBefore = change.before.data();
         const transactionAfter = change.after.data();
@@ -57,6 +58,7 @@ exports.onUpdateTransaction = functions.firestore
         const userRef = admin.firestore()
             .collection("Users")
             .doc(userId);
+
 
         const userDocSnapshot = await userRef.get();
 
@@ -116,6 +118,53 @@ exports.onDeleteTransaction = functions.firestore
 
     });
 
+
+exports.onUserUpdate = functions.firestore
+    .document("/Users/{userId}")
+    .onUpdate(async (change, context) => {
+        const userId = context.params.userId;
+        console.log("Balance Update", userId);
+
+        const userAfter = change.after.data();
+
+
+        // See documentation on defining a message payload.
+        const userRef = await admin.firestore()
+            .collection("Users")
+            .doc(userId).get();
+
+        const androidNotificationToken = userRef.data().androidNotificationToken;
+
+        const message = {
+            notification: {
+                title: "Low Balance",
+                body: "Your balance is below $200",
+            },
+            token: androidNotificationToken,
+            data: {
+                title: "Low Balance",
+                body: "Your balance is below $200",
+            }
+        };
+
+        if (userAfter.balance < 200.00) {
+            admin.messaging().send(message)
+                .then((response) => {
+                    console.log(message)
+                    admin.firestore().collection("Notifications").doc().set({
+                        title: "Low Balance",
+                        content: "Your balance is below $200",
+                    });
+
+
+                    console.log('Successfully sent message:', response);
+                })
+                .catch((error) => {
+                    console.log('Error sending message:', error);
+                })
+        }
+
+    });
 
 // exports.onCreateFollower = functions.firestore
 //     .document("/Followers/{userId}/Followers/{followerId}")

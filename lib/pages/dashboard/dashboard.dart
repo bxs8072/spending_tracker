@@ -27,6 +27,21 @@ class _DashboardState extends State<Dashboard> {
           DashboardAppBar(person: widget.person, key: widget.key),
           DashboardBalanceCard(key: widget.key, person: widget.person),
           // QuoteOfTheDay(person: widget.person, key: widget.key),
+
+          SliverToBoxAdapter(
+            child: GestureDetector(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: _size.height * 0.3,
+                    child: Text("Comparison Line Chart"),
+                  ),
+                ),
+              ),
+            ),
+          ),
           DashboardRecentActivity(person: widget.person, key: widget.key),
           DashboardTargetCard(person: widget.person, key: widget.key),
         ],
