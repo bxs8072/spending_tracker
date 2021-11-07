@@ -35,6 +35,12 @@ exports.onCreateTransaction = functions.firestore
             });
         }
 
+        admin.firestore().collection("Notifications").doc().set({
+            title: "Transaction Created",
+            content: "Transaction Type: " + transaction.transactionType + "\n" +
+                "Amount: $" + transaction.amount + "\n"
+        });
+
     });
 
 exports.onUpdateTransaction = functions.firestore
@@ -70,10 +76,15 @@ exports.onUpdateTransaction = functions.firestore
         if (transactionBefore.amount != transactionAfter.amount) {
             userRef.update({
                 balance: user.balance + transactionBefore.amount - transactionAfter.amount,
-                //5000 + 500 - 700 if after > before
-                //5000 + 500 -300
             });
         }
+
+        admin.firestore().collection("Notifications").doc().set({
+            title: "Transaction Updated",
+            content: "Transaction Type: " + transactionAfter.transactionType + "\n" +
+                "Amount: $" + transactionAfter.amount + "\n"
+        });
+
     });
 
 exports.onDeleteTransaction = functions.firestore
@@ -111,17 +122,12 @@ exports.onDeleteTransaction = functions.firestore
 
     });
 
-
 exports.onUserUpdate = functions.firestore
     .document("/Users/{userId}")
     .onUpdate(async (change, context) => {
         const userId = context.params.userId;
         console.log("Balance Update", userId);
-
         const userAfter = change.after.data();
-
-
-        // See documentation on defining a message payload.
         const userRef = await admin.firestore()
             .collection("Users")
             .doc(userId).get();
@@ -157,4 +163,117 @@ exports.onUserUpdate = functions.firestore
                 })
         }
 
+    });
+
+
+exports.onCreateTarget = functions.firestore
+    .document("/Save/{saveId}")
+    .onCreate(async (snapshot, context) => {
+        console.log("Saving Target Created", snapshot.id);
+        const saveId = context.params.saveId
+        const userId = context.params.saveId
+
+
+        const saveRef = admin.firestore()
+            .collection("Users")
+            .doc(saveId);
+
+        const userRef = admin.firestore()
+            .collection("Users")
+            .doc(userId);
+
+        const saveDocSnapshot = await saveRef.get();
+        const userDocSnapshot = await userRef.get();
+
+        let save = saveDocSnapshot.data();
+        let user = userDocSnapshot.data();
+
+        const androidNotificationToken = user.androidNotificationToken;
+
+        const message = {
+            notification: {
+                title: "Target Created",
+                body: "Target amount: $" + save.amount,
+            },
+            token: androidNotificationToken,
+            data: {
+                title: "Target Created",
+                body: "Target amount: $" + save.amount,
+                expiredAt: save.expiredAt,
+            }
+        };
+
+        admin.messaging().send(message)
+            .then((response) => {
+                console.log(message)
+                admin.firestore().collection("Notifications").doc().set({
+                    title: save.title,
+                    content: save.description + "\n" +
+                        "Amount: $" + save.amount + "\n" +
+                        "Target Date: " + save.expiredAt
+                })
+                console.log('Successfully sent message:', response);
+            })
+            .catch((error) => {
+                console.log('Error sending message:', error);
+            })
+
+
+
+    });
+
+exports.onUpdatearget = functions.firestore
+    .document("/Save/{saveId}")
+    .onUpdate(async (change, context) => {
+        const saveId = context.params.saveId
+        const userId = context.params.saveId
+        console.log("Saving Target Updated", saveId);
+
+        const saveBefore = change.before.data();
+        const saveAfter = change.after.data();
+
+        const saveRef = admin.firestore()
+            .collection("Users")
+            .doc(saveId);
+
+        const userRef = admin.firestore()
+            .collection("Users")
+            .doc(userId);
+
+        const saveDocSnapshot = await saveRef.get();
+        const userDocSnapshot = await userRef.get();
+
+        let save = saveDocSnapshot.data();
+        let user = userDocSnapshot.data();
+
+        const androidNotificationToken = user.androidNotificationToken;
+
+        const message = {
+            notification: {
+                title: "Target Updated",
+                body: "Target amount: $" + saveAfter.amount,
+            },
+            token: androidNotificationToken,
+            data: {
+                title: "Target Updated",
+                body: "Target amount: $" + saveAfter.amount,
+                expiredAt: saveAfter.expiredAt,
+            }
+        };
+
+        admin.messaging().send(message)
+            .then((response) => {
+                console.log(message)
+                admin.firestore().collection("Notifications").doc().set({
+                    title: saveAfter.title,
+                    content: saveAfter.description + "\n" +
+                        "Amount: $" + saveAfter.amount + "\n" +
+                        "Target Date: " + saveAfter.expiredAt
+                })
+
+                console.log('Successfully sent message:', response);
+            })
+            .catch((error) => {
+                console.log('Error sending message:', error);
+            })
     });

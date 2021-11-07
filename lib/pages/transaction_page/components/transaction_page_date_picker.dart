@@ -67,7 +67,6 @@ class TransactionPageDatePicker extends StatelessWidget {
               lastDate: DateTime.now(),
               icon: Icon(Icons.event),
               onChanged: (val) {
-                print(val);
                 bloc.update(
                   endDate: DateTime.parse(val),
                   startDate: transactionPageModel.startDate,
@@ -75,7 +74,6 @@ class TransactionPageDatePicker extends StatelessWidget {
                 );
               },
               onSaved: (val) {
-                print(val);
                 bloc.update(
                   endDate: DateTime.parse(val!),
                   startDate: transactionPageModel.startDate,
