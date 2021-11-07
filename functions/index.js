@@ -34,12 +34,12 @@ exports.onCreateTransaction = functions.firestore
                 balance: user.balance + transaction.amount,
             });
         }
-
-        admin.firestore().collection("Notifications").doc().set({
-            title: "Transaction Created",
-            content: "Transaction Type: " + transaction.transactionType + "\n" +
-                "Amount: $" + transaction.amount + "\n"
-        });
+        admin.firestore().collection("Notifications").doc(userId)
+            .collection("Notifications").doc().set({
+                title: "Transaction Created",
+                content: "Transaction Type: " + transaction.transactionType + "\n" +
+                    "Amount: $" + transaction.amount + "\n"
+            });
 
     });
 
@@ -79,11 +79,12 @@ exports.onUpdateTransaction = functions.firestore
             });
         }
 
-        admin.firestore().collection("Notifications").doc().set({
-            title: "Transaction Updated",
-            content: "Transaction Type: " + transactionAfter.transactionType + "\n" +
-                "Amount: $" + transactionAfter.amount + "\n"
-        });
+        admin.firestore().collection("Notifications").doc(userId)
+            .collection("Notifications").doc().set({
+                title: "Transaction Updated",
+                content: "Transaction Type: " + transactionAfter.transactionType + "\n" +
+                    "Amount: $" + transactionAfter.amount + "\n"
+            });
 
     });
 
@@ -150,10 +151,11 @@ exports.onUserUpdate = functions.firestore
             admin.messaging().send(message)
                 .then((response) => {
                     console.log(message)
-                    admin.firestore().collection("Notifications").doc().set({
-                        title: "Low Balance",
-                        content: "Your balance is below $200",
-                    });
+                    admin.firestore().collection("Notifications").doc(userId)
+                        .collection("Notifications").doc().set({
+                            title: "Low Balance",
+                            content: "Your balance is below $200",
+                        });
 
 
                     console.log('Successfully sent message:', response);
@@ -206,12 +208,13 @@ exports.onCreateTarget = functions.firestore
         admin.messaging().send(message)
             .then((response) => {
                 console.log(message)
-                admin.firestore().collection("Notifications").doc().set({
-                    title: save.title,
-                    content: save.description + "\n" +
-                        "Amount: $" + save.amount + "\n" +
-                        "Target Date: " + save.expiredAt
-                })
+                admin.firestore().collection("Notifications").doc(userId)
+                    .collection("Notifications").doc().set({
+                        title: save.title,
+                        content: save.description + "\n" +
+                            "Amount: $" + save.amount + "\n" +
+                            "Target Date: " + save.expiredAt
+                    })
                 console.log('Successfully sent message:', response);
             })
             .catch((error) => {
@@ -264,12 +267,13 @@ exports.onUpdatearget = functions.firestore
         admin.messaging().send(message)
             .then((response) => {
                 console.log(message)
-                admin.firestore().collection("Notifications").doc().set({
-                    title: saveAfter.title,
-                    content: saveAfter.description + "\n" +
-                        "Amount: $" + saveAfter.amount + "\n" +
-                        "Target Date: " + saveAfter.expiredAt
-                })
+                admin.firestore().collection("Notifications").doc(userId)
+                    .collection("Notifications").doc().set({
+                        title: saveAfter.title,
+                        content: saveAfter.description + "\n" +
+                            "Amount: $" + saveAfter.amount + "\n" +
+                            "Target Date: " + saveAfter.expiredAt
+                    })
 
                 console.log('Successfully sent message:', response);
             })

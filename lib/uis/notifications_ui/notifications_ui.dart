@@ -31,6 +31,8 @@ class NotificationsUI extends StatelessWidget {
           StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('Notifications')
+                  .doc(person.id)
+                  .collection("Notifications")
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
