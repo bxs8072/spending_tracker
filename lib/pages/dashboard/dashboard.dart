@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:uchiha_saving/app_drawer/app_drawer.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/pages/dashboard/components/dashboard_app_bar.dart';
 import 'package:uchiha_saving/pages/dashboard/components/dashboard_balance_card.dart';
@@ -21,6 +22,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
     return Scaffold(
+      drawer: AppDrawer(person: widget.person),
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: [

@@ -34,6 +34,7 @@ exports.onCreateTransaction = functions.firestore
                 balance: user.balance + transaction.amount,
             });
         }
+
         admin.firestore().collection("Notifications").doc(userId)
             .collection("Notifications").doc().set({
                 title: "Transaction Created",
@@ -63,19 +64,45 @@ exports.onUpdateTransaction = functions.firestore
 
         let user = userDocSnapshot.data();
 
-        if (transactionBefore.transactionType == "expense" && transactionAfter.transactionType == "income") {
-            userRef.update({
-                balance: user.balance + transactionAfter.amount,
-            });
-        } else if (transactionBefore.transactionType == "income" && transactionAfter.transactionType == "expense") {
-            userRef.update({
-                balance: user.balance - transactionAfter.amount,
-            });
-        }
 
-        if (transactionBefore.amount != transactionAfter.amount) {
+        if (transactionBefore.amount != transactionAfter.amount &&
+            transactionAfter.transactionType == "expense" &&
+            transactionBefore.transactionType == "expense") {
             userRef.update({
                 balance: user.balance + transactionBefore.amount - transactionAfter.amount,
+            });
+        } else if (transactionBefore.amount != transactionAfter.amount &&
+            transactionAfter.transactionType == "income" &&
+            transactionBefore.transactionType == "income") {
+            userRef.update({
+                balance: user.balance - transactionBefore.amount + transactionAfter.amount,
+            });
+        }
+        else if (transactionBefore.amount != transactionAfter.amount &&
+            transactionAfter.transactionType == "income" &&
+            transactionBefore.transactionType == "expense") {
+            userRef.update({
+                balance: user.balance + transactionBefore.amount + transactionAfter.amount,
+            });
+        }
+        else if (transactionBefore.amount != transactionAfter.amount &&
+            transactionAfter.transactionType == "expense" &&
+            transactionBefore.transactionType == "income") {
+            userRef.update({
+                balance: user.balance - transactionBefore.amount - transactionAfter.amount,
+            });
+        }
+        else if (transactionBefore.amount == transactionAfter.amount &&
+            transactionAfter.transactionType == "income" &&
+            transactionBefore.transactionType == "expense") {
+            userRef.update({
+                balance: user.balance + transactionBefore.amount + transactionAfter.amount,
+            });
+        } else if (transactionBefore.amount == transactionAfter.amount &&
+            transactionAfter.transactionType == "expense" &&
+            transactionBefore.transactionType == "income") {
+            userRef.update({
+                balance: user.balance - transactionBefore.amount - transactionAfter.amount,
             });
         }
 

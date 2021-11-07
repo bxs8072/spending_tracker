@@ -88,6 +88,8 @@ class NotificationsUI extends StatelessWidget {
                                       onPressed: () {
                                         FirebaseFirestore.instance
                                             .collection('Notifications')
+                                            .doc(person.id)
+                                            .collection("Notifications")
                                             .doc(snapshot.data!.docs
                                                 .map((e) => e.id)
                                                 .toList()[i])

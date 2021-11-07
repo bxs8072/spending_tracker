@@ -235,60 +235,11 @@ class _EditTransactionsUIState extends State<EditTransactionsUI> {
                                       category: _category!,
                                       priority: _priority!)
                                   .toMap)
-                              //     .then((value) {
-                              //   if (widget.transaction.transactionType !=
-                              //       _transactionType) {
-                              //     if (_transactionType == TransactionType.expense) {
-                              //       fr.FirebaseFirestore.instance
-                              //           .collection("Users")
-                              //           .doc(widget.person.id)
-                              //           .update({
-                              //         "balance": widget.person.balance -
-                              //             double.parse(
-                              //                 _amountController.text.trim()),
-                              //       });
-                              //     } else {
-                              //       fr.FirebaseFirestore.instance
-                              //           .collection("Users")
-                              //           .doc(widget.person.id)
-                              //           .update({
-                              //         "balance": widget.person.balance +
-                              //             double.parse(
-                              //                 _amountController.text.trim()),
-                              //       });
-                              //     }
-                              //   }
-
-                              //   if (widget.transaction.amount !=
-                              //       double.parse(_amountController.text.trim())) {
-                              //     if (_transactionType == TransactionType.income) {
-                              //       fr.FirebaseFirestore.instance
-                              //           .collection("Users")
-                              //           .doc(widget.person.id)
-                              //           .update({
-                              //         "balance": widget.person.balance -
-                              //             widget.transaction.amount +
-                              //             double.parse(
-                              //                 _amountController.text.trim()),
-                              //       });
-                              //     } else {
-                              //       fr.FirebaseFirestore.instance
-                              //           .collection("Users")
-                              //           .doc(widget.person.id)
-                              //           .update({
-                              //         "balance": widget.person.balance +
-                              //             widget.transaction.amount -
-                              //             double.parse(
-                              //                 _amountController.text.trim()),
-                              //       });
-                              //     }
-                              //   }
-                              // })
                               .then((value) {
                             Navigator.of(context).pop();
                           });
                         },
-                        child: Text("Submit"),
+                        child: Text("Update"),
                       ),
                     ],
                   ),
