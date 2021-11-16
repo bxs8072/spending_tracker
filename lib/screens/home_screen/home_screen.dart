@@ -38,32 +38,34 @@ class _HomeScreenState extends State<HomeScreen> {
   FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _fcm.subscribeToTopic(widget.person.id);
-    _fcm.getToken().then((token) {
-      FirebaseFirestore.instance
-          .collection("Users")
-          .doc(widget.person.id)
-          .update({"androidNotificationToken": token});
-    });
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    // _fcm.getToken().then((token) {
+    // FirebaseFirestore.instance
+    //       .collection("Users")
+    //       .doc(widget.person.id)
+    //       .update({"androidNotificationToken": token});
+    // });
 
-    FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
-      customNavigator(context, NotificationsUI(person: widget.person));
-    });
+    // FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
+    //   customNavigator(context, NotificationsUI(person: widget.person));
+    //   Fluttertoast.showToast(
+    //     msg: message.data["body"],
+    //   );
+    // });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      Fluttertoast.showToast(
-        msg: message.data["body"],
-      );
-    });
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print(message.data);
-      Fluttertoast.showToast(
-        msg: message.data["body"],
-      );
-    });
+    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    //   Fluttertoast.showToast(
+    //     msg: message.data["body"],
+    //   );
+    // });
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   print(message.data);
+    //   Fluttertoast.showToast(
+    //     msg: message.data["body"],
+    //   );
+    // });
   }
 
   @override

@@ -36,7 +36,7 @@ class Person {
         phone: data["phone"],
         email: data["email"],
         address: Address.fromDynamic(data["address"]),
-        balance: data["balance"],
+        balance: data["balance"].toDouble(),
         name: Name.fromDynamic(data["name"]),
         photoURL: data["photoURL"],
       );
@@ -46,7 +46,7 @@ class Person {
         phone: data["phone"],
         email: data["email"],
         address: Address.fromDynamic(data["address"]),
-        balance: data["balance"],
+        balance: data["balance"].toDouble(),
         name: Name.fromDynamic(data["name"]),
         photoURL: data["photoURL"],
       );

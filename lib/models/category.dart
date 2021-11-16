@@ -45,46 +45,4 @@ class Category {
     return categoryList
         .firstWhere((element) => element.title == data['category']);
   }
-
-  //  void saveCategory(Category category) {
-  //   final _pref = SharedPreferences.getInstance();
-  //   _pref.then((value) {
-  //     List<String> _cat = value.getStringList("categories")!;
-  //     bool _isExist = _cat.contains(json.encode(category.toMap));
-
-  //     if (!_isExist) {
-  //       _cat.add(json.encode(category.toMap));
-  //       value.setStringList("categories", _cat);
-  //     } else {
-  //       print("Already existed");
-  //     }
-  //   });
-  // }
-
-  // void deleteCategory(Category category) {
-  //   final _pref = SharedPreferences.getInstance();
-  //   _pref.then((value) {
-  //     List<String> _cat = value.getStringList("categories")!;
-  //     _cat.removeWhere((element) => element == json.encode(category.toMap));
-  //     value.setStringList("categories", _cat);
-  //   });
-  // }
-
-  // void updateCategory(Category category, IconData iconData, String title) {
-  //   final _pref = SharedPreferences.getInstance();
-  //   _pref.then((value) {
-  //     List<String> _cat = value.getStringList("categories")!;
-  //     Category _findCat = Category.fromDynamic(
-  //         _cat.firstWhere((element) => element == json.encode(category.toMap)));
-
-  //     _findCat = Category(iconData: iconData, title: title);
-
-  //     int _index = _cat.indexOf(json.encode(category.toMap));
-
-  //     _cat[_index] = json.encode(_findCat.toMap);
-
-  //     value.setStringList("categories", _cat);
-  //   });
-  // }
-
 }

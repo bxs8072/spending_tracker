@@ -12,7 +12,7 @@ import 'package:uchiha_saving/pages/transaction_page/components/transaction_page
 import 'package:uchiha_saving/pages/transaction_page/select_category_ui.dart';
 import 'package:uchiha_saving/pages/transaction_page/transaction_builder.dart';
 import 'package:uchiha_saving/tools/custom_navigator.dart';
-import 'package:uchiha_saving/uis/chart_ui/chart_ui.dart';
+import 'package:uchiha_saving/uis/pie_chart_ui/pie_chart_ui.dart';
 import 'package:uchiha_saving/uis/transactions_search_ui/transactions_search_ui.dart';
 
 // ignore: must_be_immutable
@@ -90,7 +90,7 @@ class TransactionPage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return ChartUI(
+                          return PieChartUI(
                             person: person,
                             key: key,
                           );
