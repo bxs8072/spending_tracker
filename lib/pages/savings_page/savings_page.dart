@@ -70,7 +70,9 @@ class _SavingsPageState extends State<SavingsPage> {
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return SliverToBoxAdapter(
-                    child: Center(child: CircularProgressIndicator()),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   );
                 } else if (!snapshot.data!.exists) {
                   return CreateGoalCard(person: widget.person);
@@ -358,7 +360,7 @@ class _SavingsPageState extends State<SavingsPage> {
                           : Padding(
                               padding: EdgeInsets.only(top: _size.height * 0.1),
                               child: Text(
-                                "You have enough usable balance to meet your target\n ☺️☺️☺️",
+                                "You have enough usable balance to meet your goal\n ☺️☺️☺️",
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.lato(
                                   fontSize: _size.height * 0.028,

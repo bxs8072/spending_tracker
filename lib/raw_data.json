@@ -1,0 +1,11 @@
+[
+    {
+        "title": "Coffee",
+        "description": "aajkfn",
+        "createdAt": createdAt,
+        "amount": amount,
+        "transactionType": transactionTypeToString(transactionType),
+        "category": category.title,
+        "priority": priority,
+      }
+]

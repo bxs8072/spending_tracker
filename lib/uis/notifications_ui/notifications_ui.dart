@@ -61,43 +61,26 @@ class NotificationsUI extends StatelessWidget {
                       : SliverList(
                           delegate: SliverChildBuilderDelegate((context, i) {
                             return Card(
-                              child: Container(
-                                margin: EdgeInsets.all(10),
-                                padding: EdgeInsets.all(10),
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                        alignment: Alignment.center,
-                                        padding: EdgeInsets.all(10),
-                                        child: Text(
-                                          _items[i]['title'],
-                                          style:
-                                              GoogleFonts.allerta(fontSize: 16),
-                                        )),
-                                    Container(
-                                      alignment: Alignment.center,
-                                      padding: EdgeInsets.all(10),
-                                      margin: EdgeInsets.only(bottom: 10),
-                                      child: Text(
-                                        _items[i]['content'],
-                                        style:
-                                            GoogleFonts.allerta(fontSize: 16),
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        FirebaseFirestore.instance
-                                            .collection('Notifications')
-                                            .doc(person.id)
-                                            .collection("Notifications")
-                                            .doc(snapshot.data!.docs
-                                                .map((e) => e.id)
-                                                .toList()[i])
-                                            .delete();
-                                      },
-                                      child: Text("Delete"),
-                                    ),
-                                  ],
+                              child: ListTile(
+                                title: Text(
+                                  _items[i]['title'],
+                                  style: GoogleFonts.lato(),
+                                ),
+                                subtitle: Text(
+                                  _items[i]['content'],
+                                  style: GoogleFonts.lato(),
+                                ),
+                                trailing: CloseButton(
+                                  onPressed: () {
+                                    FirebaseFirestore.instance
+                                        .collection('Notifications')
+                                        .doc(person.id)
+                                        .collection("Notifications")
+                                        .doc(snapshot.data!.docs
+                                            .map((e) => e.id)
+                                            .toList()[i])
+                                        .delete();
+                                  },
                                 ),
                               ),
                             );

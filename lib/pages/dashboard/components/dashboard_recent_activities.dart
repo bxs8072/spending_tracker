@@ -91,31 +91,13 @@ class _DashboardRecentActivityState extends State<DashboardRecentActivity> {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return SliverToBoxAdapter(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+            return SliverToBoxAdapter();
           }
           List<Transaction> _list = snapshot.data!.docs
               .map((e) => Transaction.fromDynamic(e))
               .toList();
           if (_list.isEmpty) {
-            return SliverToBoxAdapter(
-                child: Center(
-              child: Column(
-                children: [
-                  SizedBox(height: _size.height * 0.2),
-                  Text(
-                    "Cannot find any transactions\n😐😐😐",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.lato(
-                      fontSize: _size.height * 0.023,
-                    ),
-                  ),
-                ],
-              ),
-            ));
+            return SliverToBoxAdapter();
           }
           return SliverToBoxAdapter(
             child: Padding(

@@ -3,12 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uchiha_saving/models/address.dart';
 import 'package:uchiha_saving/models/name.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:path/path.dart' as Path;
+import 'package:uchiha_saving/tools/us_phone_formatter.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   final Person person;
@@ -255,21 +257,29 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               ),
 
               TextFormField(
+                restorationId: 'phone_number_field',
+                textInputAction: TextInputAction.next,
+                // focusNode: _phoneNumber,
                 controller: _phoneController,
-                focusNode: _phoneFocusnode,
-                keyboardType: TextInputType.numberWithOptions(),
                 decoration: InputDecoration(
+                  // filled: true,
                   hintText: "(###) ###-####",
-                  label: Text("Phone"),
+                  labelText: "Phone",
+                  prefixText: '+1 ',
                 ),
+                keyboardType: TextInputType.phone,
                 onChanged: (val) {
                   setState(() {});
                 },
-                onEditingComplete: () {
-                  FocusScope.of(context).nextFocus();
-                },
+                maxLength: 14,
+                maxLengthEnforcement: MaxLengthEnforcement.none,
+                validator: (val) {},
+                // TextInputFormatters are applied in sequence.
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly,
+                  USPhoneFormatter(),
+                ],
               ),
-
               TextFormField(
                 controller: _streetController,
                 focusNode: _streetFocusnode,
@@ -351,8 +361,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     child: TextFormField(
                       controller: _zipCodeController,
                       focusNode: _zipCodeFocusnode,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        label: Text("Zip code"),
+                        label: Text("Zip Code"),
                       ),
                       onChanged: (val) {
                         setState(() {});

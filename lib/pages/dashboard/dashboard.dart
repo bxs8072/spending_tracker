@@ -8,6 +8,8 @@ import 'package:uchiha_saving/pages/dashboard/components/dashboard_balance_card.
 import 'package:uchiha_saving/pages/dashboard/components/dashboard_recent_activities.dart';
 import 'package:uchiha_saving/pages/dashboard/components/dashboard_target_card.dart';
 import 'package:uchiha_saving/pages/dashboard/components/quote_of_the_day.dart';
+import 'package:uchiha_saving/tools/custom_navigator.dart';
+import 'package:uchiha_saving/uis/line_chart_ui/line_chart_ui.dart';
 
 class Dashboard extends StatefulWidget {
   final Person person;
@@ -32,6 +34,9 @@ class _DashboardState extends State<Dashboard> {
 
           SliverToBoxAdapter(
             child: GestureDetector(
+              onTap: () {
+                customNavigator(context, LineChartUI(person: widget.person));
+              },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Card(

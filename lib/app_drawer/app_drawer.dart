@@ -5,6 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:uchiha_saving/api/auth.dart';
 import 'package:uchiha_saving/models/person.dart';
+import 'package:uchiha_saving/pages/profile_page/profile_page.dart';
+import 'package:uchiha_saving/pages/savings_page/savings_page.dart';
+import 'package:uchiha_saving/pages/transaction_page/transaction_page.dart';
+import 'package:uchiha_saving/tools/custom_navigator.dart';
+import 'package:uchiha_saving/uis/bookmarks_ui/bookmarks_ui.dart';
 
 class AppDrawer extends StatelessWidget {
   final Person person;
@@ -45,6 +50,9 @@ class AppDrawer extends StatelessWidget {
             child: Column(
               children: [
                 ListTile(
+                  onTap: () {
+                    customNavigator(context, SavingsPage(person: person));
+                  },
                   leading: Icon(FontAwesome.dollar),
                   title: Text(
                     "Goal",
@@ -52,6 +60,9 @@ class AppDrawer extends StatelessWidget {
                   ),
                 ),
                 ListTile(
+                  onTap: () {
+                    customNavigator(context, TransactionPage(person: person));
+                  },
                   leading: Icon(FontAwesome5.money_bill),
                   title: Text(
                     "Transactions",
@@ -59,6 +70,9 @@ class AppDrawer extends StatelessWidget {
                   ),
                 ),
                 ListTile(
+                  onTap: () {
+                    customNavigator(context, BookmarksUI(person: person));
+                  },
                   leading: Icon(Icons.bookmark),
                   title: Text(
                     "Bookmarks",
@@ -66,6 +80,9 @@ class AppDrawer extends StatelessWidget {
                   ),
                 ),
                 ListTile(
+                  onTap: () {
+                    customNavigator(context, ProfilePage(person: person));
+                  },
                   leading: Icon(Icons.person),
                   title: Text(
                     "Profile",
