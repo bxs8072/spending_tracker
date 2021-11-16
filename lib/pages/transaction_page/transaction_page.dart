@@ -9,6 +9,7 @@ import 'package:uchiha_saving/pages/transaction_page/bloc/transaction_page_bloc.
 import 'package:uchiha_saving/pages/transaction_page/bloc/transaction_page_model.dart';
 import 'package:uchiha_saving/pages/transaction_page/components/transaction_page_categories_picker.dart';
 import 'package:uchiha_saving/pages/transaction_page/components/transaction_page_date_picker.dart';
+import 'package:uchiha_saving/pages/transaction_page/components/transaction_pie_chart_card.dart';
 import 'package:uchiha_saving/pages/transaction_page/select_category_ui.dart';
 import 'package:uchiha_saving/pages/transaction_page/transaction_builder.dart';
 import 'package:uchiha_saving/tools/custom_navigator.dart';
@@ -86,23 +87,7 @@ class TransactionPage extends StatelessWidget {
                   ),
 
                   SliverToBoxAdapter(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return PieChartUI(
-                            person: person,
-                            key: key,
-                          );
-                        }));
-                      },
-                      child: Card(
-                        child: Container(
-                          height: _size.height * 0.3,
-                          child: Text("Show Chart"),
-                        ),
-                      ),
-                    ),
+                    child: TransactionPieChartCard(person: person),
                   ),
 
                   SliverToBoxAdapter(child: SizedBox(height: 15)),
