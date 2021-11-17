@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uchiha_saving/api/auth.dart';
 import 'package:uchiha_saving/app_drawer/app_drawer.dart';
+import 'package:uchiha_saving/list.dart';
 import 'package:uchiha_saving/models/person.dart';
 import 'package:uchiha_saving/pages/articles_page/articles_page.dart';
 import 'package:uchiha_saving/pages/dashboard/dashboard.dart';
@@ -41,31 +42,31 @@ class _HomeScreenState extends State<HomeScreen> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    // _fcm.getToken().then((token) {
-    // FirebaseFirestore.instance
-    //       .collection("Users")
-    //       .doc(widget.person.id)
-    //       .update({"androidNotificationToken": token});
-    // });
+    _fcm.getToken().then((token) {
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(widget.person.id)
+          .update({"androidNotificationToken": token});
+    });
 
-    // FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
-    //   customNavigator(context, NotificationsUI(person: widget.person));
-    //   Fluttertoast.showToast(
-    //     msg: message.data["body"],
-    //   );
-    // });
+    FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
+      customNavigator(context, NotificationsUI(person: widget.person));
+      Fluttertoast.showToast(
+        msg: message.data["body"],
+      );
+    });
 
-    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    //   Fluttertoast.showToast(
-    //     msg: message.data["body"],
-    //   );
-    // });
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   print(message.data);
-    //   Fluttertoast.showToast(
-    //     msg: message.data["body"],
-    //   );
-    // });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      Fluttertoast.showToast(
+        msg: message.data["body"],
+      );
+    });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print(message.data);
+      Fluttertoast.showToast(
+        msg: message.data["body"],
+      );
+    });
   }
 
   @override

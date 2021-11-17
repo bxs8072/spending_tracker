@@ -9,10 +9,10 @@ import 'package:uchiha_saving/pages/transaction_page/bloc/transaction_page_bloc.
 import 'package:uchiha_saving/pages/transaction_page/bloc/transaction_page_model.dart';
 import 'package:uchiha_saving/pages/transaction_page/components/transaction_page_categories_picker.dart';
 import 'package:uchiha_saving/pages/transaction_page/components/transaction_page_date_picker.dart';
-import 'package:uchiha_saving/pages/transaction_page/components/transaction_pie_chart_card.dart';
 import 'package:uchiha_saving/pages/transaction_page/select_category_ui.dart';
 import 'package:uchiha_saving/pages/transaction_page/transaction_builder.dart';
 import 'package:uchiha_saving/tools/custom_navigator.dart';
+import 'package:uchiha_saving/uis/line_chart_ui/line_chart_ui.dart';
 import 'package:uchiha_saving/uis/pie_chart_ui/pie_chart_ui.dart';
 import 'package:uchiha_saving/uis/transactions_search_ui/transactions_search_ui.dart';
 
@@ -71,6 +71,36 @@ class TransactionPage extends StatelessWidget {
                             ? Colors.white
                             : Colors.black,
                     actions: [
+                      PopupMenuButton(
+                          icon: Icon(Icons.pie_chart),
+                          onSelected: (val) {
+                            customNavigator(
+                              context,
+                              val == 1
+                                  ? LineChartUI(
+                                      person: person,
+                                      key: key,
+                                    )
+                                  : PieChartUI(
+                                      person: person,
+                                      key: key,
+                                    ),
+                            );
+                          },
+                          itemBuilder: (ctx) {
+                            return [
+                              PopupMenuItem(
+                                child: Text("Line Graph"),
+                                enabled: true,
+                                value: 1,
+                              ),
+                              PopupMenuItem(
+                                enabled: true,
+                                child: Text("Pie Chart"),
+                                value: 2,
+                              ),
+                            ];
+                          }),
                       IconButton(
                         onPressed: () {
                           customNavigator(
@@ -84,10 +114,6 @@ class TransactionPage extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
-
-                  SliverToBoxAdapter(
-                    child: TransactionPieChartCard(person: person),
                   ),
 
                   SliverToBoxAdapter(child: SizedBox(height: 15)),

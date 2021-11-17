@@ -165,7 +165,7 @@ class _PieChartUIState extends State<PieChartUI> {
                     .doc(widget.person.id)
                     .collection("Transactions")
                     .where("createdAt",
-                        isGreaterThanOrEqualTo: fs.Timestamp.fromDate(start!))
+                        isGreaterThanOrEqualTo: fs.Timestamp.fromDate(start))
                     .where("createdAt",
                         isLessThanOrEqualTo: fs.Timestamp.fromDate(
                             DateTime(end.year, end.month, end.day + 1)))

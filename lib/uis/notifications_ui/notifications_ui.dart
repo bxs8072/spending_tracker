@@ -17,6 +17,7 @@ class NotificationsUI extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            pinned: true,
             centerTitle: true,
             title: Text(
               "Notifications",
