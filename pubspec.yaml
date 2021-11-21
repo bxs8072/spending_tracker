@@ -24,7 +24,7 @@ dependencies:
   fl_chart: ^0.40.2
   flare_flutter: ^3.0.2
   flutter_iconpicker: ^3.0.4
-  flutter_local_notifications: ^8.2.0
+  flutter_local_notifications: ^9.1.4
   flutter_sticky_header: ^0.6.0
   fluttericon: ^2.0.0
   fluttertoast: ^8.0.8

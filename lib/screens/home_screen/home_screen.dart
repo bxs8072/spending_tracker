@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -60,12 +61,26 @@ class _HomeScreenState extends State<HomeScreen> {
       Fluttertoast.showToast(
         msg: message.data["body"],
       );
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+        id: 1,
+        channelKey: '1',
+        title: message.data["title"],
+        body: message.data["body"],
+      ));
     });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print(message.data);
       Fluttertoast.showToast(
         msg: message.data["body"],
       );
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+        id: 1,
+        channelKey: '1',
+        title: message.data["title"],
+        body: message.data["body"],
+      ));
     });
   }
 

@@ -40,7 +40,39 @@ class AppDrawer extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  Auth().signOut();
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Text(
+                        "Are you sure?",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.lato(),
+                      ),
+                      content: Text(
+                        "Do you want to logout?",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.lato(),
+                      ),
+                      actions: [
+                        IconButton(
+                          onPressed: () {
+                            Auth().signOut();
+                          },
+                          icon: Icon(
+                            Icons.check_box,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                          },
+                          icon: Icon(
+                            Icons.cancel_rounded,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 },
                 icon: Icon(Icons.logout),
               ),
