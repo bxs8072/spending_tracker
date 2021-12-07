@@ -177,6 +177,10 @@ class _PieChartUIState extends State<PieChartUI> {
                     List<Transaction> _list = snapshot.data!.docs
                         .map((e) => Transaction.fromDynamic(e.data()))
                         .toList();
+                    _list = _list
+                        .where(
+                            (e) => e.transactionType == TransactionType.expense)
+                        .toList();
                     return SliverToBoxAdapter(
                         child: _index == 0
                             ? PieChartByCategory(

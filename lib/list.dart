@@ -190,7 +190,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Rent',
       description: 'Rent',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 01)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 01)),
       amount: 1517.00,
       transactionType: TransactionType.expense,
       category: Category.rent,
@@ -198,7 +198,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'School',
       description: 'Fees',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 02)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 02)),
       amount: 1000.00,
       transactionType: TransactionType.expense,
       category: Category.school,
@@ -206,7 +206,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Electricity',
       description: 'Electricity',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 04)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 04)),
       amount: 300.00,
       transactionType: TransactionType.expense,
       category: Category.miscellaneous,
@@ -214,7 +214,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Wifi',
       description: 'Fees',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 05)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 05)),
       amount: 50.00,
       transactionType: TransactionType.expense,
       category: Category.miscellaneous,
@@ -222,7 +222,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Car Insurance',
       description: '',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 06)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 06)),
       amount: 3000.00,
       transactionType: TransactionType.expense,
       category: Category.transportation,
@@ -230,7 +230,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Health Insurance',
       description: 'Insurance',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 08)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 08)),
       amount: 850.00,
       transactionType: TransactionType.expense,
       category: Category.entertainment,
@@ -238,7 +238,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Movie',
       description: 'Theater',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 10)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 10)),
       amount: 35.00,
       transactionType: TransactionType.expense,
       category: Category.entertainment,
@@ -246,7 +246,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'New york eats',
       description: 'food',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 11)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 11)),
       amount: 40.00,
       transactionType: TransactionType.expense,
       category: Category.restaurant,
@@ -254,7 +254,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Income',
       description: 'Income',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 13)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 13)),
       amount: 3000.00,
       transactionType: TransactionType.expense,
       category: Category.entertainment,
@@ -262,7 +262,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Transportation',
       description: 'Bus & metro',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 16)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 16)),
       amount: 300.00,
       transactionType: TransactionType.expense,
       category: Category.transportation,
@@ -270,7 +270,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Chick Filla',
       description: 'Restraunt',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 18)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 18)),
       amount: 30.00,
       transactionType: TransactionType.expense,
       category: Category.restaurant,
@@ -278,7 +278,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Subway',
       description: 'Food',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 20)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 20)),
       amount: 30.00,
       transactionType: TransactionType.expense,
       category: Category.restaurant,
@@ -286,7 +286,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Mediterrean',
       description: 'Restraunt',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 24)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 24)),
       amount: 45.00,
       transactionType: TransactionType.expense,
       category: Category.entertainment,
@@ -294,7 +294,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Grocery',
       description: 'Shopping',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 26)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 26)),
       amount: 180.00,
       transactionType: TransactionType.expense,
       category: Category.entertainment,
@@ -302,7 +302,7 @@ List<Transaction> list1 = [
   Transaction(
       title: 'Car',
       description: 'New Car',
-      createdAt: fs.Timestamp.fromDate(DateTime(2021, 11, 28)),
+      createdAt: fs.Timestamp.fromDate(DateTime(2021, 10, 28)),
       amount: 5000.00,
       transactionType: TransactionType.expense,
       category: Category.miscellaneous,
