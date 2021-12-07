@@ -30,7 +30,9 @@ class ProfilePageAppBar extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: () {
-                    Auth().signOut();
+                    Auth().signOut().then((value) {
+                      Navigator.of(ctx).pop();
+                    });
                   },
                   icon: Icon(
                     Icons.check_box,

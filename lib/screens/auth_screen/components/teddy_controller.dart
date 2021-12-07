@@ -129,4 +129,12 @@ class TeddyController extends FlareControls {
       play("fail");
     }
   }
+
+  String pass(String password) {
+    if (_password == password) {
+      return "success";
+    } else {
+      return "fail";
+    }
+  }
 }

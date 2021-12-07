@@ -1,5 +1,5 @@
-String greeting() {
-  var timeNow = DateTime.now().hour;
+String greeting(DateTime date) {
+  var timeNow = date.hour;
   if (timeNow <= 12) {
     return 'Good Morning';
   } else if ((timeNow > 12) && (timeNow <= 16)) {

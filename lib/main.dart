@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:theme_provider/theme_provider.dart';
-
 import 'package:uchiha_saving/screens/landing_screen/landing_screen.dart';
 
 void main() async {
@@ -14,7 +13,6 @@ void main() async {
     badge: true,
     sound: true,
   );
-
   AwesomeNotifications().initialize(
       // set the icon to null if you want to use the default app icon
       null,
@@ -48,9 +46,7 @@ class MyApp extends StatelessWidget {
           builder: (themeContext) => MaterialApp(
             theme: ThemeProvider.themeOf(themeContext).data,
             debugShowCheckedModeBanner: false,
-            home:
-                //BasicPage(),
-                LandingScreen(),
+            home: LandingScreen(),
           ),
         ),
       ),

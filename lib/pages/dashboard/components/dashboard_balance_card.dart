@@ -31,7 +31,7 @@ class DashboardBalanceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  greeting(),
+                  greeting(DateTime.now()),
                   style: GoogleFonts.lato(
                     fontSize: _size.height * 0.03,
                     fontWeight: FontWeight.bold,
